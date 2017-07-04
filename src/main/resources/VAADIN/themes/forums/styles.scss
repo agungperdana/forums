@@ -1,0 +1,17 @@
+$v-background-color: hsl(0, 100%, 100%);
+$v-layout-margin-top:5px;
+$v-layout-margin-right:3px;
+$v-layout-margin-left:3px;
+$v-layout-margin-bottom:0px;
+
+@import "../valo/valo";
+
+.forums{
+	@include valo;
+
+	.top-line{
+		background-color:red;
+		padding:0;
+		margin:0;
+	}
+}

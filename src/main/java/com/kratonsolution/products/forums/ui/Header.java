@@ -8,10 +8,10 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -29,7 +29,7 @@ public class Header extends HorizontalLayout
 	
 	public Header()
 	{
-		setMargin(new MarginInfo(true, false, false, false));
+		setMargin(new MarginInfo(false, true, false, false));
 		setWidth("100%");
 		
 		addComponent(logo);
@@ -45,6 +45,7 @@ public class Header extends HorizontalLayout
 	{
 		Label icon = new Label("MARK3");
 		
+		logo.setMargin(new MarginInfo(false,false,false,true));
 		logo.setWidth("100%");
 		logo.addComponent(icon);
 		logo.setComponentAlignment(icon, Alignment.MIDDLE_LEFT);
@@ -58,38 +59,33 @@ public class Header extends HorizontalLayout
 		
 		ComboBox<FindType> finds = new ComboBox<>();
 		finds.setItems(FindType.values());
-		finds.setSelectedItem(FindType.TRIBE);
 		finds.setWidth("100px");
+		finds.setEnabled(true);
+		finds.setSelectedItem(FindType.TRIBE);
 		
 		TextField search = new TextField();
 		search.setPlaceholder("Search...");
+		search.setWidth("80%");
 		
-		Button login = new Button("Sign In");
-		login.setStyleName(ValoTheme.BUTTON_LINK);
+		MenuBar bar = new MenuBar();
+		bar.setStyleName(ValoTheme.MENUBAR_BORDERLESS+" "+ValoTheme.MENUBAR_SMALL);
 		
-		Label separator = new Label("|");
-		
-		Button create = new Button("Create Account");
-		create.setStyleName(ValoTheme.BUTTON_LINK);
+		bar.addItem("Sign In",Icons.SIGN_IN,event->{});
+		bar.addItem("|",event->{});
+		bar.addItem("Create Account",Icons.CREATE_ACCOUNT,event->{});
 		
 		navigation.addComponent(lfind);
 		navigation.addComponent(finds);
 		navigation.addComponent(search);
-		navigation.addComponent(login);
-		navigation.addComponent(separator);
-		navigation.addComponent(create);
+		navigation.addComponent(bar);
 		
-		navigation.setComponentAlignment(create, Alignment.MIDDLE_LEFT);
-		navigation.setComponentAlignment(separator, Alignment.MIDDLE_RIGHT);
-		navigation.setComponentAlignment(login, Alignment.MIDDLE_RIGHT);
+		navigation.setComponentAlignment(bar, Alignment.MIDDLE_RIGHT);
 		navigation.setComponentAlignment(search, Alignment.MIDDLE_RIGHT);
 		navigation.setComponentAlignment(finds, Alignment.MIDDLE_RIGHT);
 		navigation.setComponentAlignment(lfind, Alignment.MIDDLE_RIGHT);
 		
-		navigation.setExpandRatio(create, 3.5f);
-		navigation.setExpandRatio(separator, 1f);
-		navigation.setExpandRatio(login, 1f);
-		navigation.setExpandRatio(search, 6f);
+		navigation.setExpandRatio(bar, 5.5f);
+		navigation.setExpandRatio(search, 5f);
 		navigation.setExpandRatio(finds, 1f);
 		navigation.setExpandRatio(lfind, 1f);
 	}
