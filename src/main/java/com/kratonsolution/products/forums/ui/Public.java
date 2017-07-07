@@ -3,24 +3,20 @@ package com.kratonsolution.products.forums.ui;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
+import com.vaadin.annotations.Viewport;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SpringUI
 @Theme("forums")
-public class Public extends UI
-{
-	private VerticalLayout layout = new VerticalLayout();
-	
-	@Autowired
-	private Header header = new Header();
-	
+@Title("Mark 3")
+@Viewport("user-scalable=no,initial-scale=1.0")
+public class Public extends Page
+{	
 	@Autowired
 	private TopTribeNews news;
 
@@ -38,23 +34,14 @@ public class Public extends UI
     	
     	setContent(layout);
     	
-    	dispay();
+    	display();
+    	initContent();
     }
-    
-    private void dispay()
-    {
-    	HorizontalLayout line = new HorizontalLayout();
-    	line.setWidth("100%");
-    	line.setHeight("10px");
-    	line.setStyleName("top-line");
-    
-    	HorizontalLayout content = new HorizontalLayout();
-    	content.setWidth("100%");
-    	content.setHeight("100%");
-    	content.setSpacing(false);
-    	content.setMargin(false);
-    	
-    	GridLayout right = new GridLayout(1,2);
+
+	@Override
+	public void initContent()
+	{
+		GridLayout right = new GridLayout(1,2);
     	right.setWidth("100%");
     	right.setHeight("100%");
     	right.addComponent(tribes);
@@ -66,13 +53,5 @@ public class Public extends UI
     	content.addComponent(right);
     	content.setExpandRatio(news, 5);
     	content.setExpandRatio(right, 1f);
-    	
-    	layout.addComponent(header);
-    	layout.addComponent(line);
-    	layout.addComponent(content);
-    	
-    	layout.setExpandRatio(header, 0.6f);
-    	layout.setExpandRatio(line, 0.2f);
-    	layout.setExpandRatio(content, 11f);
-    }
+	}
 }

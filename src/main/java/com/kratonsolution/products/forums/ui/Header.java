@@ -3,6 +3,10 @@
  */
 package com.kratonsolution.products.forums.ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.kratonsolution.products.forums.dm.FindType;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -13,7 +17,10 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
+
+import lombok.Getter;
 
 /**
  * @author Agung Dodi Perdana
@@ -21,11 +28,18 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 @SpringComponent
 @UIScope
+@Getter
 public class Header extends HorizontalLayout
 {
 	private HorizontalLayout logo = new HorizontalLayout();
 	
 	private HorizontalLayout navigation = new HorizontalLayout();
+	
+	@Autowired
+	private UserDetailsService authService;
+	
+	@Autowired
+	private AuthenticationManager manager;
 	
 	public Header()
 	{
@@ -43,10 +57,13 @@ public class Header extends HorizontalLayout
 	
 	private void initLogo()
 	{
-		Label icon = new Label("MARK3");
+		Label icon = new Label("");
+		icon.setIcon(Icons.LOGO);
 		
-		logo.setMargin(new MarginInfo(false,false,false,true));
+		logo.setMargin(false);
+		logo.setSpacing(false);
 		logo.setWidth("100%");
+		logo.setHeight("100%");
 		logo.addComponent(icon);
 		logo.setComponentAlignment(icon, Alignment.MIDDLE_LEFT);
 	}
@@ -70,9 +87,18 @@ public class Header extends HorizontalLayout
 		MenuBar bar = new MenuBar();
 		bar.setStyleName(ValoTheme.MENUBAR_BORDERLESS+" "+ValoTheme.MENUBAR_SMALL);
 		
-		bar.addItem("Sign In",Icons.SIGN_IN,event->{});
+		bar.addItem("Sign In",Icons.SIGN_IN,event->{
+			UI.getCurrent().addWindow(new Signin(authService,manager));
+		});
+		
 		bar.addItem("|",event->{});
-		bar.addItem("Create Account",Icons.CREATE_ACCOUNT,event->{});
+		
+		bar.addItem("Create Account",Icons.CREATE_ACCOUNT,event->{
+			Registration form = new Registration();
+			form.getSignin().addClickListener(click->{});
+			
+			UI.getCurrent().addWindow(form);
+		});
 		
 		navigation.addComponent(lfind);
 		navigation.addComponent(finds);

@@ -17,7 +17,7 @@ import com.vaadin.ui.themes.ValoTheme;
 @UIScope
 public class TopTribeNews extends Accordion
 {
-	private GridLayout layout = new GridLayout(3, 100);
+	private GridLayout layout = new GridLayout(3, 4);
 	
 	public TopTribeNews()
 	{
@@ -25,5 +25,21 @@ public class TopTribeNews extends Accordion
 		setHeight("100%");
 		addTab(layout,"Top Tribe News",Icons.TRIBE_NEWS);
 		setStyleName(ValoTheme.ACCORDION_BORDERLESS);
+
+		layout.setWidth("100%");
+		layout.setSpacing(true);
+		layout.setMargin(true);
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
+		layout.addComponent(new VPost());
 	}
 }

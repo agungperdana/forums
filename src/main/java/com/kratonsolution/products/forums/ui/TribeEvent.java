@@ -6,7 +6,6 @@ package com.kratonsolution.products.forums.ui;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Accordion;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -27,9 +26,10 @@ public class TribeEvent extends Accordion
 		addTab(layout,"Top Event",Icons.TRIBE_EVENT);
 		setStyleName(ValoTheme.ACCORDION_BORDERLESS);
 		
-		layout.setSizeFull();
-	
-		for(int idx=1;idx<11;idx++)
-			layout.addComponent(new Label("Event "+idx));
+		layout.addComponent(new HPost());
+		layout.addComponent(new HPost());
+		layout.addComponent(new HPost());
+		layout.addComponent(new HPost());
+		layout.addComponent(new HPost());
 	}
 }
