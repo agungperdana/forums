@@ -11,15 +11,15 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Agung Dodi Perdana
  * @email agung.dodi.perdana@gmail.com 
  */
-public abstract class TopTribe extends Accordion
+public abstract class TrieEvent extends Accordion
 {
 	protected VerticalLayout layout = new VerticalLayout();
-
-	public TopTribe()
+	
+	public TrieEvent()
 	{
 		setWidth("100%");
 		setHeight("99%");
-		addTab(layout,"Top Tribe",Icons.TRIBE_TOP);
+		addTab(layout,"Top Event",Icons.TRIBE_EVENT);
 		setStyleName(ValoTheme.ACCORDION_BORDERLESS);
 	}
 }

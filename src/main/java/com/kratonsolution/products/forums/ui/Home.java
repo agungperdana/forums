@@ -1,6 +1,5 @@
 package com.kratonsolution.products.forums.ui;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.kratonsolution.products.forums.security.svc.SecurityInformation;
@@ -14,15 +13,8 @@ import com.vaadin.ui.themes.ValoTheme;
 @SpringUI(path="/Home")
 @Theme("forums")
 public class Home extends Page
-{
-	@Autowired
-	private TopTribeNews news;
-
-	@Autowired
-	private TopTribe tribes;
-	
-	@Autowired
-	private TribeEvent events;
+{	
+	private SideMenu side = new SideMenu();
 	
     @Override
     protected void init(VaadinRequest request) 
@@ -47,5 +39,8 @@ public class Home extends Page
     	
     	header.getNavigation().addComponent(bar);
     	header.getNavigation().setComponentAlignment(bar, Alignment.BOTTOM_RIGHT);
+    	
+    	content.addComponent(side);
+    	content.setComponentAlignment(side,Alignment.TOP_LEFT);
     }
 }

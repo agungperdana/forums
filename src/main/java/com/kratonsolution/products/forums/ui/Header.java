@@ -63,9 +63,9 @@ public class Header extends HorizontalLayout
 		logo.setMargin(false);
 		logo.setSpacing(false);
 		logo.setWidth("100%");
-		logo.setHeight("100%");
+		logo.setHeight("85%");
 		logo.addComponent(icon);
-		logo.setComponentAlignment(icon, Alignment.MIDDLE_LEFT);
+		logo.setComponentAlignment(icon, Alignment.TOP_LEFT);
 	}
 	
 	private void initNavogation()

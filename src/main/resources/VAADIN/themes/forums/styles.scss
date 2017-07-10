@@ -1,10 +1,10 @@
-$v-background-color: hsl(0, 100%, 100%);
+/**$v-background-color: hsl(0, 100%, 100%);*/
 $v-layout-margin-top:5px;
 $v-layout-margin-right:3px;
 $v-layout-margin-left:3px;
 $v-layout-margin-bottom:0px;
-$v-focus-color:#8B0000;
-$v-font-color:#8B0000;
+$v-focus-color:gray;
+$v-font-color:gray;
 
 @import "../valo/valo";
 
@@ -15,5 +15,9 @@ $v-font-color:#8B0000;
 		background-color:red;
 		padding:0;
 		margin:0;
+	}
+
+	.button-align-left .v-button-wrap {
+   		text-align: left; 
 	}
 }

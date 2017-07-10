@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.kratonsolution.products.forums.dm.User;
 import com.vaadin.data.Binder;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
@@ -59,6 +60,7 @@ public class Signin extends Window
 		
 		signin.setWidth("100%");
 		signin.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+		signin.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 	
 		label.setSizeUndefined();
 		label.setContentMode(ContentMode.HTML);

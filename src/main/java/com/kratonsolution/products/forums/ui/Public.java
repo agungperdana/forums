@@ -18,13 +18,13 @@ import com.vaadin.ui.themes.ValoTheme;
 public class Public extends Page
 {	
 	@Autowired
-	private TopTribeNews news;
+	private PublicTopTribeNews news;
 
 	@Autowired
-	private TopTribe tribes;
+	private PublicTopTribe tribes;
 	
 	@Autowired
-	private TribeEvent events;
+	private PublicTribeEvent events;
 	
     @Override
     protected void init(VaadinRequest request) 
