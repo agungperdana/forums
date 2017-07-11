@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.kratonsolution.products.forums.dm.FindType;
+import com.kratonsolution.products.forums.svc.UserService;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -40,6 +41,9 @@ public class Header extends HorizontalLayout
 	
 	@Autowired
 	private AuthenticationManager manager;
+	
+	@Autowired
+	private UserService service;
 	
 	public Header()
 	{
@@ -94,10 +98,7 @@ public class Header extends HorizontalLayout
 		bar.addItem("|",event->{});
 		
 		bar.addItem("Create Account",Icons.CREATE_ACCOUNT,event->{
-			Registration form = new Registration();
-			form.getSignin().addClickListener(click->{});
-			
-			UI.getCurrent().addWindow(form);
+			UI.getCurrent().addWindow(new Registration(service));
 		});
 		
 		navigation.addComponent(lfind);

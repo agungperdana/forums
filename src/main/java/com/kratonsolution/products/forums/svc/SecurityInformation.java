@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.kratonsolution.products.forums.security.svc;
+package com.kratonsolution.products.forums.svc;
 
 import java.util.Collection;
 

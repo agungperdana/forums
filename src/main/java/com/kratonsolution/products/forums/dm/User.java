@@ -42,7 +42,10 @@ public class User implements Serializable
 	private String password;
 	
 	@Column(name="is_enabled")
-	private boolean enabled = true;
+	private boolean enabled = false;
+	
+	@Column(name="is_activated")
+	private boolean activated = false;
 	
 	@Version
 	private Long version;

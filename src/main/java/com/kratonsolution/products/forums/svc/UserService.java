@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.kratonsolution.products.forums.security.svc;
+package com.kratonsolution.products.forums.svc;
 
 import java.util.List;
 
@@ -58,6 +58,10 @@ public class UserService
 	@Secured("ROLE_USER_CREATE")
 	public void add(User user)
 	{
+		User on = repository.findOneByEmail(user.getEmail());
+		if(on != null)
+			throw new RuntimeException("User with email "+user.getEmail()+" already exist.");
+		
 		user.setPassword(encryptor.encryptPassword(user.getPassword()));
 		repository.save(user);
 	}

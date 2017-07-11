@@ -2,7 +2,7 @@ package com.kratonsolution.products.forums.ui;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.kratonsolution.products.forums.security.svc.SecurityInformation;
+import com.kratonsolution.products.forums.svc.SecurityInformation;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;

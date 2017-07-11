@@ -3,8 +3,8 @@ $v-layout-margin-top:5px;
 $v-layout-margin-right:3px;
 $v-layout-margin-left:3px;
 $v-layout-margin-bottom:0px;
-$v-focus-color:gray;
-$v-font-color:gray;
+$v-focus-color:#808080;
+$v-font-color:#808080;
 
 @import "../valo/valo";
 
@@ -12,7 +12,7 @@ $v-font-color:gray;
 	@include valo;
 
 	.top-line{
-		background-color:red;
+		background-color:#FF0000;
 		padding:0;
 		margin:0;
 	}
