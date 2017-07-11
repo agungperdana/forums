@@ -105,7 +105,11 @@ public class Signin extends Window
 						{
 							signin.setEnabled(false);
 							SecurityContextHolder.getContext().setAuthentication(authentication);
-							Page.getCurrent().setLocation("/Home");
+							
+							if(email.getValue().equals("admin@mark3.com"))
+								Page.getCurrent().setLocation("/Admin");
+							else
+								Page.getCurrent().setLocation("/Home");
 						}
 						else
 							label.setValue("<font color='red'>Login fail, please try again!</font>");
