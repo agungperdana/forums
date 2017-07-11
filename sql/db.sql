@@ -222,7 +222,8 @@ CREATE TABLE `users` (
   `name` varchar(200) DEFAULT NULL,
   `birth_date` date DEFAULT NULL,
   `password` varchar(250) NOT NULL,
-  `is_enabled` char(1) DEFAULT '1',
+  `is_enabled` char(1) DEFAULT '0',
+  `is_activated` char(1) DEFAULT '0',
   `version` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
@@ -236,7 +237,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('00000','admin@mark3.com','System Administrator',NULL,'jIfSsj+ceSsamqTfmru/ZlLSRsjwUijQK4CJqi86fLNWb/nqSv2eY2rRrJxgpdDM','1',0);
+INSERT INTO `users` VALUES ('00000','admin@mark3.com','System Administrator',NULL,'jIfSsj+ceSsamqTfmru/ZlLSRsjwUijQK4CJqi86fLNWb/nqSv2eY2rRrJxgpdDM','1','1',0),('dafd28e7-ce20-491b-9677-1fe80fe9fa88','jordan@mark3.com','jordan@mark3.com','2017-06-27','SBfvEVJJ73raerPiyA2UsajdGqzIxJ6mr5ArTHI3eQqOMPKscsNM6xoKB6weeyEf','0','0',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -249,4 +250,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-10 11:01:47
+-- Dump completed on 2017-07-11 10:04:44
