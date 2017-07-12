@@ -6,6 +6,7 @@ package com.kratonsolution.products.forums.ui;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
+import com.kratonsolution.products.forums.ui.user.UserTab;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Viewport;
@@ -43,7 +44,10 @@ public class Admin extends UI
 		bar.setWidth("100%");
 		bar.setHeight("35px");
 		MenuItem mark3 = bar.addItem("",VaadinIcons.BUG_O, null);
-		mark3.addItem("User",VaadinIcons.USER, null);
+		mark3.addItem("User",Icons.SIGN_IN, event->{
+			sheet.addTab(new UserTab(),"User",Icons.SIGN_IN);
+		});
+		
 		mark3.addItem("Tribe Administration",VaadinIcons.TOOLS, null);
 		mark3.addSeparator();
 		mark3.addItem("Sign Out",VaadinIcons.SIGN_OUT, event->{
@@ -61,7 +65,7 @@ public class Admin extends UI
 		layout.addComponent(bar);
 		layout.addComponent(sheet);
 		layout.setExpandRatio(bar, 0.6f);
-		layout.setExpandRatio(sheet, 18f);
+		layout.setExpandRatio(sheet, 13f);
 		
 		setContent(layout);
 	}

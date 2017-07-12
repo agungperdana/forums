@@ -23,4 +23,10 @@ public interface Icons
 	Resource TRIBE_TOP = new ClassResource("/static/icons/trend.png");
 	
 	Resource TRIBE_EVENT = new ClassResource("/static/icons/event.png");
+	
+	Resource NEW_DATA = new ClassResource("/static/icons/add.png");
+	
+	Resource REFRESH_DATA = new ClassResource("/static/icons/refresh.png");
+
+	Resource REMOVE_DATA = new ClassResource("/static/icons/remove.png");
 }

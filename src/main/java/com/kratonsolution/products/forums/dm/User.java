@@ -51,4 +51,14 @@ public class User implements Serializable
 	private Long version;
 
 	public User(){}
+	
+	public String getEnabledStatus()
+	{
+		return enabled?"Yes":"No";
+	}
+	
+	public String getActivatedStatus()
+	{
+		return activated?"Yes":"No";
+	}
 }

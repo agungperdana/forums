@@ -98,7 +98,7 @@ public class Header extends HorizontalLayout
 		bar.addItem("|",event->{});
 		
 		bar.addItem("Create Account",Icons.CREATE_ACCOUNT,event->{
-			UI.getCurrent().addWindow(new Registration(service));
+			UI.getCurrent().addWindow(new Registration());
 		});
 		
 		navigation.addComponent(lfind);

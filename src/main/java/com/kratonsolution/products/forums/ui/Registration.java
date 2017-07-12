@@ -5,6 +5,7 @@ package com.kratonsolution.products.forums.ui;
 
 import java.sql.Date;
 
+import com.kratonsolution.products.forums.Springs;
 import com.kratonsolution.products.forums.dm.User;
 import com.kratonsolution.products.forums.svc.UserService;
 import com.vaadin.data.Binder;
@@ -42,12 +43,12 @@ public class Registration extends Window
 
 	private Button signin = new Button("Register");
 	
-	private UserService service;
+	private UserService service = Springs.get(UserService.class);
+	
+	private boolean done = false;
 
-	public Registration(UserService service)
+	public Registration()
 	{
-		this.service = service;
-		
 		setWidth("400px");
 		setHeight("500px");
 		setCaption("New Account");
@@ -129,6 +130,8 @@ public class Registration extends Window
 						Notification.show(e.getMessage(),Type.ERROR_MESSAGE);
 						return;
 					}
+					
+					done = true;
 					
 					Notification.show("Your account successfully created, please check your email for verification", Type.WARNING_MESSAGE);
 					
