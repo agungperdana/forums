@@ -32,43 +32,34 @@ public class Paging extends HorizontalLayout
 
 	public Paging()
 	{
-		setWidth("100%");
+		setSizeUndefined();
+		setSpacing(true);
+		setMargin(false);
+		setStyleName("paging");
 		
-		Label empty = new Label();
-		empty.setWidth("100%");
-		
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		
-		first.setSizeUndefined();
+		first.setWidth("100%");
 		first.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-		prev.setSizeUndefined();
+		prev.setWidth("100%");
 		prev.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-		next.setSizeUndefined();
+		next.setWidth("100%");
 		next.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-		last.setSizeUndefined();
+		last.setWidth("100%");
 		last.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		
-		display.setWidth("100px");
+		display.setWidth("100%");
 		display.setValue(page+" of "+totalPage);
 		
-		addComponent(empty);
-		addComponent(layout);
+		addComponent(first);
+		addComponent(prev);
+		addComponent(display);
+		addComponent(next);
+		addComponent(last);
 		
-		layout.addComponent(first);
-		layout.addComponent(prev);
-		layout.addComponent(display);
-		layout.addComponent(next);
-		layout.addComponent(last);
-		
-		layout.setComponentAlignment(first, Alignment.MIDDLE_RIGHT);
-		layout.setComponentAlignment(last, Alignment.MIDDLE_RIGHT);
-		layout.setComponentAlignment(display, Alignment.MIDDLE_RIGHT);
-		layout.setComponentAlignment(next, Alignment.MIDDLE_RIGHT);
-		layout.setComponentAlignment(last, Alignment.MIDDLE_RIGHT);
-	
-		setExpandRatio(empty, 4f);
-		setExpandRatio(layout, 1f);
+		setComponentAlignment(first, Alignment.MIDDLE_RIGHT);
+		setComponentAlignment(last, Alignment.MIDDLE_RIGHT);
+		setComponentAlignment(display, Alignment.MIDDLE_RIGHT);
+		setComponentAlignment(next, Alignment.MIDDLE_RIGHT);
+		setComponentAlignment(last, Alignment.MIDDLE_RIGHT);
 		
 		if(totalPage==1)
 		{

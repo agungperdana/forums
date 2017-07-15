@@ -25,6 +25,5 @@ public class Toolbar extends MenuBar
 	{
 		setStyleName(ValoTheme.MENUBAR_BORDERLESS);
 		setWidth("100%");
-		setHeight("35px");
 	}
 }

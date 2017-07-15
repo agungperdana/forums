@@ -36,6 +36,11 @@ public class UserService
 		return repository.findOne(id);
 	}
 	
+	public User byEmail(String email)
+	{
+		return repository.findOneByEmail(email);
+	}
+	
 	public List<User> findAll()
 	{
 		return repository.findAll();
@@ -63,7 +68,21 @@ public class UserService
 	
 	public void edit(User user)
 	{
-		repository.saveAndFlush(user);
+		User out = repository.findOne(user.getId());
+		if(out != null)
+		{
+			out.setName(user.getName());
+			out.setEmail(user.getEmail());
+			out.setBirthDate(user.getBirthDate());
+			out.setEnabled(user.isEnabled());
+			out.setActivated(user.isActivated());
+			
+			if(!out.getPassword().equals(user.getPassword()))
+				out.setPassword(encryptor.encryptPassword(user.getPassword()));
+
+		
+			repository.saveAndFlush(out);
+		}
 	}
 	
 	public void delete(@PathVariable String id)

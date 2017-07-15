@@ -45,30 +45,29 @@ LOCK TABLES `log` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `roles`
+-- Table structure for table `preferences`
 --
 
-DROP TABLE IF EXISTS `roles`;
+DROP TABLE IF EXISTS `preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `roles` (
+CREATE TABLE `preferences` (
   `id` char(50) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `note` varchar(150) DEFAULT NULL,
-  `version` bigint(20) NOT NULL DEFAULT '0',
+  `picture_path` varchar(250) DEFAULT NULL,
+  `version` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
+  UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `roles`
+-- Dumping data for table `preferences`
 --
 
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+LOCK TABLES `preferences` WRITE;
+/*!40000 ALTER TABLE `preferences` DISABLE KEYS */;
+INSERT INTO `preferences` VALUES ('00000',NULL,0);
+/*!40000 ALTER TABLE `preferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -155,6 +154,35 @@ LOCK TABLES `tribe_news` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tribe_picture`
+--
+
+DROP TABLE IF EXISTS `tribe_picture`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tribe_picture` (
+  `id` char(50) NOT NULL,
+  `path` varchar(250) DEFAULT NULL,
+  `fk_tribe` char(50) DEFAULT NULL,
+  `inserted_by` varchar(250) DEFAULT NULL,
+  `inserted_date` timestamp NULL DEFAULT NULL,
+  `is_displayed` char(1) DEFAULT '0',
+  `version` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tribe_picture`
+--
+
+LOCK TABLES `tribe_picture` WRITE;
+/*!40000 ALTER TABLE `tribe_picture` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tribe_picture` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tribe_role`
 --
 
@@ -224,6 +252,7 @@ CREATE TABLE `users` (
   `password` varchar(250) NOT NULL,
   `is_enabled` char(1) DEFAULT '0',
   `is_activated` char(1) DEFAULT '0',
+  `language` char(10) DEFAULT 'EN_US',
   `version` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
@@ -237,7 +266,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('00000','admin@mark3.com','System Administrator',NULL,'jIfSsj+ceSsamqTfmru/ZlLSRsjwUijQK4CJqi86fLNWb/nqSv2eY2rRrJxgpdDM','1','1',0),('dafd28e7-ce20-491b-9677-1fe80fe9fa88','jordan@mark3.com','jordan@mark3.com','2017-06-27','SBfvEVJJ73raerPiyA2UsajdGqzIxJ6mr5ArTHI3eQqOMPKscsNM6xoKB6weeyEf','0','0',0);
+INSERT INTO `users` VALUES ('00000','admin@mark3.com','System Administrator','2017-07-18','jIfSsj+ceSsamqTfmru/ZlLSRsjwUijQK4CJqi86fLNWb/nqSv2eY2rRrJxgpdDM','1','1','EN_US',1),('0555d8bc-9da5-423d-bb20-9e6c278aa5ed','kiki@ok.com','Kiki Kaki Kiku','2017-06-26','sgX5ahb5ZrGtpYU9Y8/cysULVS4Vv60oT8AeTbXDT8eR5HGexYkti0utzCAtnN/C','1','1','EN_US',4),('3c4daef1-6380-48ab-bbff-4e74287c6d98','roni@gmail.com','roni@gmail.com','2017-07-04','sItccSFmBPl2qTiFK+EqSR9KjZtxeR3EQ23tkPDe5UmuRIHujr3lIyp3mpnRUy7D','0','0','EN_US',0),('46550871-cfe0-4d75-9680-e92fdcb15eae','rudi@tabuti.com','rudi@tabuti.com','2017-07-05','YRFJIwspE2rZGADoA+ZHvk3PiA9bBXEOR3a9ZvqwYReMXaVx5vZFHPtpzEzST96w','0','0','EN_US',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -250,4 +279,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-11 10:04:44
+-- Dump completed on 2017-07-15 10:39:01

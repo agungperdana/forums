@@ -3,15 +3,17 @@
  */
 package com.kratonsolution.products.forums.ui;
 
-import java.util.Optional;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinServletService;
-import com.vaadin.ui.ListSelect;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 import lombok.Getter;
 
@@ -22,65 +24,86 @@ import lombok.Getter;
 @Getter
 public class SideMenu extends Panel
 {
-	private ListSelect<SideMenuItem> layout = new ListSelect<>();
+	private VerticalLayout layout = new VerticalLayout();
+	
+	private MenuBar newsbar = new MenuBar();
+	
+	private MenuBar managebar = new MenuBar();
+	
+	private MenuBar messagebar = new MenuBar();
+	
+	private MenuBar accountbar = new MenuBar();
+	
+	private MenuBar signoutbar = new MenuBar();
+	
+	private MenuItem news = newsbar.addItem("What's New",null);
+	
+	private MenuItem manage = managebar.addItem("Manage Tribe",null);
+	
+	private MenuItem message = messagebar.addItem("Message",null);
+	
+	private MenuItem account = accountbar.addItem("My Account",null);
 	
 	public SideMenu()
 	{
-		setWidth("15%");
-		setHeight("99%");
+		setWidth("100%");
+		setHeight("100%");
 
-		layout.setSizeFull();
-		layout.setItems(new SideMenuItem("What's New", "/static/icons/event.png"),
-						new SideMenuItem("Manage Tribe", "/static/icons/event.png"),
-						new SideMenuItem("Message", "/static/icons/event.png"),
-						new SideMenuItem("My Account", "/static/icons/event.png"),
-						new SideMenuItem("Sign Out", "/static/icons/event.png"));
+		newsbar.setStyleName(ValoTheme.MENUBAR_BORDERLESS+" "+ValoTheme.MENUBAR_SMALL);
+		newsbar.setWidth("100%");
 		
-		layout.addSelectionListener(event->{
-			Optional<SideMenuItem> selected = event.getFirstSelectedItem();
-			switch (selected.get().getName())
-			{
-				case "What's New":
-				
-				break;
-				case "Manage Tribe":
-					
-				break;
-				case "Message":
-					
-				break;
-				case "My Account":
-					
-				break;
-				default:
-					new SecurityContextLogoutHandler().logout(VaadinServletService.getCurrentServletRequest(),null, null);
-					SecurityContextHolder.getContext().setAuthentication(null);
-					getSession().close();
-					Page.getCurrent().setLocation("/");
-				break;
-			}
+		managebar.setStyleName(ValoTheme.MENUBAR_BORDERLESS+" "+ValoTheme.MENUBAR_SMALL);
+		managebar.setWidth("100%");
+		
+		messagebar.setStyleName(ValoTheme.MENUBAR_BORDERLESS+" "+ValoTheme.MENUBAR_SMALL);
+		messagebar.setWidth("100%");
+		
+		accountbar.setStyleName(ValoTheme.MENUBAR_BORDERLESS+" "+ValoTheme.MENUBAR_SMALL);
+		accountbar.setWidth("100%");
+		
+		signoutbar.setStyleName(ValoTheme.MENUBAR_BORDERLESS+" "+ValoTheme.MENUBAR_SMALL);
+		signoutbar.setWidth("100%");
+		
+		MenuItem signout = signoutbar.addItem("Sign Out",null);
+		signout.setCommand(event->{
+			new SecurityContextLogoutHandler().logout(VaadinServletService.getCurrentServletRequest(),null, null);
+			SecurityContextHolder.getContext().setAuthentication(null);
+			getSession().close();
+			Page.getCurrent().setLocation("/");
 		});
+
+		layout.setSizeUndefined();
+		layout.addComponent(newsbar);
+		layout.addComponent(managebar);
+		layout.addComponent(messagebar);
+		layout.addComponent(accountbar);
+		layout.addComponent(signoutbar);
 		
 		setContent(layout);
 	}
 	
-	@Getter
-	private class SideMenuItem
+	public void setSelected(MenuItem selected)
 	{
-		String icon;
-		
-		String name;
-		
-		public SideMenuItem(String name,String icon)
+		if(selected != null)
 		{
-			this.icon = icon;
-			this.name = name;
+			clearSelected();
+			
+			if(selected.equals(news))
+				news.setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT);
+			else if(selected.equals(manage))
+				manage.setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT);
+			else if(selected.equals(message))
+				message.setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT);	
+			else if(selected.equals(account))
+				account.setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT);
 		}
-		
-		@Override
-		public String toString()
-		{
-			return this.name;
-		}
+	}
+	
+	private void clearSelected()
+	{
+		news.setIcon(null);
+		manage.setIcon(null);
+		message.setIcon(null);
+		account.setIcon(null);
 	}
 }

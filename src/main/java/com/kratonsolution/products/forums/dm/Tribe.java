@@ -57,5 +57,8 @@ public class Tribe implements Serializable
 	@OneToMany(mappedBy="tribe",cascade=CascadeType.ALL,orphanRemoval=true)
 	private Set<TribeEvent> events = new HashSet<>();
 	
+	@OneToMany(mappedBy="tribe",cascade=CascadeType.ALL,orphanRemoval=true)
+	private Set<TribePicture> pictures = new HashSet<>();
+	
 	public Tribe(){}
 }

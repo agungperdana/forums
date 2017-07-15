@@ -3,7 +3,9 @@
  */
 package com.kratonsolution.products.forums.ui;
 
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -16,19 +18,34 @@ public abstract class Table<T> extends VerticalLayout
 	
 	protected Grid<T> grid = new Grid<T>();
 
-	protected Paging paging = new Paging();
+	protected Paging north = new Paging();
+	
+	protected Paging south = new Paging();
 	
 	public Table()
 	{
+		HorizontalLayout top = new HorizontalLayout();
+		top.setWidth("100%");
+		top.setSpacing(false);
+		top.setMargin(false);
+		top.addComponent(toolbar);
+		top.addComponent(north);
+		top.setComponentAlignment(toolbar, Alignment.MIDDLE_LEFT);
+		top.setComponentAlignment(north, Alignment.MIDDLE_RIGHT);
+		top.setExpandRatio(toolbar, 3.7f);
+		top.setExpandRatio(north, 1.3f);
+		
+		HorizontalLayout bot = new HorizontalLayout();
+		bot.setWidth("100%");
+		bot.addComponent(south);
+		bot.setComponentAlignment(south, Alignment.MIDDLE_RIGHT);
+		
 		setWidth("100%");
 		setSpacing(false);
 		setMargin(false);
-		addComponent(toolbar);
+		addComponent(top);
 		addComponent(grid);
-		addComponent(paging);
-		setExpandRatio(grid, 0.5f);
-		setExpandRatio(grid, 4f);
-		setExpandRatio(paging, 0.5f);
+		addComponent(bot);
 	}
 
 	protected void refresh()

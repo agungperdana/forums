@@ -27,7 +27,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @email agung.dodi.perdana@gmail.com 
  */
 @SpringUI(path="/Admin")
-@Theme("valo")
+@Theme("forums")
 @Title("Mark 3")
 @Viewport("user-scalable=no,initial-scale=1.0")
 public class Admin extends UI
@@ -44,12 +44,18 @@ public class Admin extends UI
 		bar.setWidth("100%");
 		bar.setHeight("35px");
 		MenuItem mark3 = bar.addItem("",VaadinIcons.BUG_O, null);
+		mark3.addItem("Preferences",VaadinIcons.TOOLS, event->{
+			UI.getCurrent().addWindow(new Preferences());
+		});
+		mark3.addSeparator();
+
 		mark3.addItem("User",Icons.SIGN_IN, event->{
 			sheet.addTab(new UserTab(),"User",Icons.SIGN_IN);
 		});
-		
-		mark3.addItem("Tribe Administration",VaadinIcons.TOOLS, null);
+
+		mark3.addItem("Tribe Administration",VaadinIcons.BOOK, null);
 		mark3.addSeparator();
+		
 		mark3.addItem("Sign Out",VaadinIcons.SIGN_OUT, event->{
 			new SecurityContextLogoutHandler().logout(VaadinServletService.getCurrentServletRequest(),null, null);
 			SecurityContextHolder.getContext().setAuthentication(null);

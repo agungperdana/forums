@@ -9,6 +9,8 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -46,6 +48,10 @@ public class User implements Serializable
 	
 	@Column(name="is_activated")
 	private boolean activated = false;
+	
+	@Column(name="language")
+	@Enumerated(EnumType.STRING)
+	private Language languange = Language.EN_US;
 	
 	@Version
 	private Long version;

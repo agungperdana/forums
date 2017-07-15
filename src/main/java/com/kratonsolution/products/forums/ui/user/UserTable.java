@@ -11,7 +11,9 @@ import com.kratonsolution.products.forums.svc.UserService;
 import com.kratonsolution.products.forums.ui.Registration;
 import com.kratonsolution.products.forums.ui.Table;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.DateRenderer;
 import com.vaadin.ui.renderers.TextRenderer;
 
@@ -30,24 +32,35 @@ public class UserTable extends Table<User>
 		grid.setWidth("100%");
 		grid.setHeight("100%");
 		grid.setSelectionMode(SelectionMode.MULTI);
-		grid.addColumn(User::getName,new TextRenderer()).setCaption("Name");
-		grid.addColumn(User::getEmail,new TextRenderer()).setCaption("Email");
-		grid.addColumn(User::getBirthDate,new DateRenderer()).setCaption("Birth Date").setWidthUndefined();
-		grid.addColumn(User::getEnabledStatus).setCaption("Enabled").setWidthUndefined();
-		grid.addColumn(User::getActivatedStatus,new TextRenderer()).setCaption("Activated").setWidthUndefined();
+		grid.addColumn(User::getName,new TextRenderer()).setCaption("Name").setExpandRatio(15);
+		grid.addColumn(User::getEmail,new TextRenderer()).setCaption("Email").setExpandRatio(15);
+		grid.addColumn(User::getBirthDate,new DateRenderer()).setCaption("Birth Date").setExpandRatio(1);
+		grid.addColumn(User::getEnabledStatus).setCaption("Enabled").setExpandRatio(1);
+		grid.addColumn(User::getActivatedStatus,new TextRenderer()).setCaption("Activated").setExpandRatio(1);
+		grid.addColumn(servuce->"Edit", new ButtonRenderer<>(eClick->{
+			Notification.show(eClick.getItem().toString());
+			
+			UserForm form = new UserForm((User)eClick.getItem());
+			form.addCloseListener(close->{
+				refresh();
+			});
+			
+			UI.getCurrent().addWindow(form);
+		})).setExpandRatio(1);
+		
 		grid.setDataProvider(new UserProvider());
 		
 		toolbar.getAdd().setCommand(event->{
 			Registration registration = new Registration();
 			registration.addCloseListener(close->{
-				grid.setDataProvider(new UserProvider());
+				refresh();
 			});
 			
 			UI.getCurrent().addWindow(registration);
 		});
 		
 		toolbar.getRefresh().setCommand(event->{
-			grid.setDataProvider(new UserProvider());
+			refresh();
 		});
 		
 		toolbar.getRemove().setCommand(event->{
