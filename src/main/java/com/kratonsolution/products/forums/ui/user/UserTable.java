@@ -5,7 +5,7 @@ package com.kratonsolution.products.forums.ui.user;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.kratonsolution.products.forums.Springs;
+import com.kratonsolution.products.forums.common.Springs;
 import com.kratonsolution.products.forums.dm.User;
 import com.kratonsolution.products.forums.svc.UserService;
 import com.kratonsolution.products.forums.ui.Registration;

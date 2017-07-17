@@ -116,6 +116,7 @@ public class Signin extends Window
 					}
 					catch (Exception e)
 					{
+						e.printStackTrace();
 						label.setValue("<font color='red'>Login fail, please try again!</font>");
 					}
 				}

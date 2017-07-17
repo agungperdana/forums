@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.kratonsolution.products.forums;
+package com.kratonsolution.products.forums.common;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;

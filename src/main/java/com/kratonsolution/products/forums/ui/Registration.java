@@ -5,7 +5,7 @@ package com.kratonsolution.products.forums.ui;
 
 import java.sql.Date;
 
-import com.kratonsolution.products.forums.Springs;
+import com.kratonsolution.products.forums.common.Springs;
 import com.kratonsolution.products.forums.dm.User;
 import com.kratonsolution.products.forums.svc.UserService;
 import com.vaadin.data.Binder;

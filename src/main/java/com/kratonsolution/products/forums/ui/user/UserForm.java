@@ -3,11 +3,10 @@
  */
 package com.kratonsolution.products.forums.ui.user;
 
-import java.sql.Date;
-
 import org.apache.logging.log4j.util.Strings;
 
-import com.kratonsolution.products.forums.Springs;
+import com.kratonsolution.products.forums.common.DateUtil;
+import com.kratonsolution.products.forums.common.Springs;
 import com.kratonsolution.products.forums.dm.User;
 import com.kratonsolution.products.forums.svc.UserService;
 import com.kratonsolution.products.forums.ui.Icons;
@@ -72,7 +71,7 @@ public class UserForm extends Window
 		name.setWidth("100%");
 
 		birth.setDateFormat("dd-MM-yyyy");
-		birth.setValue(user.getBirthDate()!=null?user.getBirthDate().toLocalDate():null);
+		birth.setValue(DateUtil.toLocalDate(user.getBirthDate()));
 		
 		password.setPlaceholder("Password");
 		password.setWidth("100%");
@@ -147,7 +146,7 @@ public class UserForm extends Window
 						return;
 					}
 					
-					binder.getBean().setBirthDate(Date.valueOf(birth.getValue()));
+					binder.getBean().setBirthDate(DateUtil.toUtilDate(birth.getValue()));
 					binder.getBean().setEnabled(enabled.getValue());
 					binder.getBean().setActivated(activated.getValue());
 					

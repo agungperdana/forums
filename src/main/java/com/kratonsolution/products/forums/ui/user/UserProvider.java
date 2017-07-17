@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 import org.springframework.data.domain.PageRequest;
 
-import com.kratonsolution.products.forums.Springs;
+import com.kratonsolution.products.forums.common.Springs;
 import com.kratonsolution.products.forums.dm.User;
 import com.kratonsolution.products.forums.dm.UserRepository;
 import com.vaadin.data.provider.DataProvider;

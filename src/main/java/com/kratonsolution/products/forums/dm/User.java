@@ -4,16 +4,13 @@
 package com.kratonsolution.products.forums.dm;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,38 +21,28 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Entity
-@Table(name="users")
+@Document(collection="users")
 public class User implements Serializable
 {
 	@Id
 	private String id = UUID.randomUUID().toString();
 
-	@Column(name="name")
 	private String name;
 	
-	@Column(name="email",unique=true)
 	private String email;
 	
-	@Column(name="birth_date")
 	private Date birthDate;
 	
-	@Column(name="password")
 	private String password;
 	
-	@Column(name="is_enabled")
 	private boolean enabled = false;
 	
-	@Column(name="is_activated")
 	private boolean activated = false;
 	
-	@Column(name="language")
-	@Enumerated(EnumType.STRING)
 	private Language languange = Language.EN_US;
 	
-	@Version
-	private Long version;
-
+	private Set<JoinedTribe> tribes = new HashSet<>();
+	
 	public User(){}
 	
 	public String getEnabledStatus()

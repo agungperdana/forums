@@ -3,6 +3,7 @@ package com.kratonsolution.products.forums.ui;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.kratonsolution.products.forums.svc.SecurityInformation;
+import com.kratonsolution.products.forums.ui.tribe.ManageTribe;
 import com.kratonsolution.products.forums.ui.tribe.WhatsNew;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
@@ -54,12 +55,16 @@ public class Home extends Page
     	content.setExpandRatio(side, 0.7f);
     	content.setExpandRatio(display, 4.3f);
     	
+    	display.setContent(new WhatsNew());
+    	side.setSelected(side.getNews());
+    	
     	side.getNews().setCommand(event->{
         	display.setContent(new WhatsNew());
         	side.setSelected(side.getNews());
     	});
     	
     	side.getManage().setCommand(event->{
+    		display.setContent(new ManageTribe());
         	side.setSelected(side.getManage());
     	});
     	

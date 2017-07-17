@@ -3,8 +3,8 @@
 	<groupId>com.kratonsolution.products</groupId>
 	<artifactId>forums</artifactId>
 	<version>0.1</version>
-	<name>Belian ERP</name>
-	<description>ERP System for SMC</description>
+	<name>Mark3</name>
+	<description>Mark3 community</description>
 	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -50,11 +50,17 @@
 	  	</dependency>
 	  	<dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <exclusions>
+				<exclusion>
+					<groupId>org.mongodb</groupId>
+			   		<artifactId>mongodb-driver</artifactId>
+	        	</exclusion>
+			</exclusions>
         </dependency>
         <dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
+		    <groupId>org.mongodb</groupId>
+		    <artifactId>mongo-java-driver</artifactId>
 		</dependency>
     	<dependency>
 			<groupId>org.projectlombok</groupId>

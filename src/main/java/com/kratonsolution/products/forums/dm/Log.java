@@ -7,11 +7,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,24 +19,17 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Entity
-@Table(name="log")
+@Document(collection="logs")
 public class Log implements Serializable
 {
 	@Id
 	private String id = UUID.randomUUID().toString();
 
-	@Column(name="event_date")
 	private Timestamp timestamp;
 
-	@Column(name="note")
 	private String note;
 	
-	@Column(name="user")
 	private String user;
-	
-	@Version
-	private Long version;
 
 	public Log(){}
 }

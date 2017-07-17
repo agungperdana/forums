@@ -6,11 +6,8 @@ package com.kratonsolution.products.forums.dm;
 import java.io.Serializable;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,18 +18,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Entity
-@Table(name="preferences")
+@Document(collection="preferences")
 public class Preferences implements Serializable
 {
 	@Id
 	private String id = UUID.randomUUID().toString();
 
-	@Column(name="picture_path")
 	private String picturePath;
-	
-	@Version
-	private Long version;
 	
 	public Preferences(){}
 }

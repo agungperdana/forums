@@ -81,7 +81,7 @@ public class UserService
 				out.setPassword(encryptor.encryptPassword(user.getPassword()));
 
 		
-			repository.saveAndFlush(out);
+			repository.save(out);
 		}
 	}
 	
