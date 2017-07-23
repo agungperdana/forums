@@ -30,5 +30,5 @@ public interface Icons
 
 	Resource REMOVE_DATA = new ClassResource("/static/icons/remove.png");
 	
-	Resource MY_OWN_TRIBE = new ClassResource("/static/icons/myowntribe.png");
+	Resource MY_OWN_TRIBE = new ClassResource("/static/icons/addtribe.png");
 }

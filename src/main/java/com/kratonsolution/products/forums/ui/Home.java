@@ -1,8 +1,6 @@
 package com.kratonsolution.products.forums.ui;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import com.kratonsolution.products.forums.svc.SecurityInformation;
+import com.kratonsolution.products.forums.common.Security;
 import com.kratonsolution.products.forums.ui.tribe.ManageTribe;
 import com.kratonsolution.products.forums.ui.tribe.WhatsNew;
 import com.vaadin.annotations.Theme;
@@ -37,10 +35,7 @@ public class Home extends Page
     	MenuBar bar = new MenuBar();
     	bar.setSizeUndefined();
     	bar.setStyleName(ValoTheme.MENUBAR_BORDERLESS);
-    	
-    	SecurityInformation information = (SecurityInformation)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	if(information != null)
-    		bar.addItem("Helo "+information.getName(), Icons.SIGN_IN,event->{});
+    	bar.addItem("Helo "+Security.getUserName(), Icons.SIGN_IN,event->{});
     	
     	header.getNavigation().addComponent(bar);
     	header.getNavigation().setComponentAlignment(bar, Alignment.BOTTOM_RIGHT);
