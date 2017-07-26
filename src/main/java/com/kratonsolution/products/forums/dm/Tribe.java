@@ -31,7 +31,15 @@ public class Tribe implements Serializable
 	
 	private String note;
 
+	private String goal;
+	
 	private Timestamp created;
+	
+	private TribeStatus lastStatus;
+	
+	private byte[] logo;
+	
+	private PersonalInfo chieftain;
 	
 	private Set<TribeRole> roles = new HashSet<>();
 	
@@ -44,6 +52,8 @@ public class Tribe implements Serializable
 	private Set<TribePicture> pictures = new HashSet<>();
 	
 	private Set<TribeFollower> followers = new HashSet<>();
+	
+	private Set<PersonalInfo> contributors = new HashSet<>();
 	
 	public Tribe(){}
 }

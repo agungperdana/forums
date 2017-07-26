@@ -7,24 +7,39 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Vector;
 
+import com.kratonsolution.products.forums.common.DateUtil;
 import com.kratonsolution.products.forums.common.Security;
 import com.kratonsolution.products.forums.common.Springs;
+import com.kratonsolution.products.forums.dm.PersonalInfo;
+import com.kratonsolution.products.forums.dm.Tribe;
+import com.kratonsolution.products.forums.dm.TribeRole;
+import com.kratonsolution.products.forums.dm.TribeRoleType;
+import com.kratonsolution.products.forums.dm.TribeStatus;
+import com.kratonsolution.products.forums.dm.TribeStatusType;
 import com.kratonsolution.products.forums.dm.User;
 import com.kratonsolution.products.forums.dm.UserRepository;
+import com.kratonsolution.products.forums.svc.TribeService;
 import com.kratonsolution.products.forums.ui.Icons;
 import com.kratonsolution.products.forums.ui.MultiCombo;
+import com.vaadin.data.Binder;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.DateField;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.DateTimeField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
@@ -40,6 +55,8 @@ import com.vaadin.ui.themes.ValoTheme;
 public class TribeForm extends Window
 {
 	private UserRepository repository = Springs.get(UserRepository.class);
+	
+	private TribeService service = Springs.get(TribeService.class);
 	
 	private HorizontalLayout layout = new HorizontalLayout();
 	
@@ -108,13 +125,15 @@ public class TribeForm extends Window
 		TextField name = new TextField("Tribe Name");
 		name.setWidth("100%");
 		
-		TextField description = new TextField("Short Description");
-		description.setWidth("100%");
+		TextField note = new TextField("Short Description");
+		note.setWidth("100%");
 		
 		TextArea goal = new TextArea("Tribe Goal");
 		goal.setWidth("100%");
 		
-		DateField setup = new DateField("Setup Date");
+		DateTimeField setup = new DateTimeField("Setup Date");
+		setup.setValue(LocalDateTime.now(ZoneId.systemDefault()));
+		setup.setEnabled(false);
 		
 		TextField member = new TextField("Tribe Member");
 		member.setEnabled(false);
@@ -125,30 +144,73 @@ public class TribeForm extends Window
 		founder.setEnabled(false);
 		founder.setValue(Security.getUserName());
 		
-		TextField chief = new TextField("Tribe Chieftain");
-		chief.setEnabled(false);
+		ComboBox<PersonalInfo> chief = new ComboBox<>("Tribe Chieftain");
+		chief.setWidth("100%");
 		
 		MultiCombo contribe = new MultiCombo("Contributor");
 		
-		Vector<String> users = new Vector<>();
+		Vector<PersonalInfo> users = new Vector<>();
 		
 		for(User user:repository.findAll())
 		{
 			if(user.isActivated() && user.isEnabled())
-				users.add(user.getEmail());
+			{
+				PersonalInfo info = new PersonalInfo();
+				info.setId(user.getId());
+				info.setName(user.getName());
+				info.setEmail(user.getEmail());
+				
+				users.add(info);
+			}
 		}
 		
+		chief.setItems(users);
 		contribe.setItems(users);
+		
+		Binder<Tribe> bind = new Binder<>();
+		bind.forField(name).withValidator(new StringLengthValidator("Name cannot be empty", 1, 500)).bind(Tribe::getTitle,Tribe::setTitle);
+		bind.forField(note).withValidator(new StringLengthValidator("Description cannot be empty", 1, 500)).bind(Tribe::getNote,Tribe::setNote);
+		bind.forField(goal).withValidator(new StringLengthValidator("Goal cannot be empty", 1, 500)).bind(Tribe::getGoal,Tribe::setGoal);
+		bind.setBean(new Tribe());
 		
 		Button button = new Button("SUBMIT THIS TRIBE");
 		button.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		button.addClickListener(event->{
-			
-			
+			if(bind.validate().isOk())
+			{
+				button.setEnabled(false);
+				
+				bind.getBean().setLogo(handler.logo.toByteArray());
+				
+				TribeRole creator = new TribeRole();
+				creator.setEmail(Security.getUserEmail());
+				creator.setName(Security.getUserName());
+				creator.setType(TribeRoleType.FOUNDER);
+				
+				bind.getBean().getRoles().add(creator);
+				
+				TribeStatus created = new TribeStatus();
+				created.setCreatedTime(DateUtil.now());
+				created.setType(TribeStatusType.CREATED);
+				
+				bind.getBean().getStatuses().add(created);
+				
+				bind.getBean().setCreated(DateUtil.toTimestamp(setup.getValue()));
+				bind.getBean().setChieftain(chief.getSelectedItem().get());
+				bind.getBean().getContributors().addAll(contribe.getAllSelected());
+				
+				service.add(bind.getBean());
+				
+				Notification.show("Tribe creation success.");
+				
+				UI.getCurrent().removeWindow(TribeForm.this);
+			}
+			else
+				Notification.show("Tribe creation failed.");
 		});
 		
 		left.addComponent(name);
-		left.addComponent(description);
+		left.addComponent(note);
 		left.addComponent(goal);
 		left.addComponent(setup);
 		left.addComponent(member);

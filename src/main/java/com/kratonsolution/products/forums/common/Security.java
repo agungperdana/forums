@@ -21,4 +21,13 @@ public class Security
     	
     	return "";
 	}
+	
+	public static String getUserEmail()
+	{
+		SecurityInformation information = (SecurityInformation)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	if(information != null)
+    		return information.getUserEmail();
+    	
+    	return "";
+	}
 }

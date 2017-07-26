@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
 
+import com.kratonsolution.products.forums.dm.PersonalInfo;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
@@ -24,7 +25,7 @@ import lombok.Getter;
  */
 public class MultiCombo extends VerticalLayout
 {
-	private ComboBox<String> active = new ComboBox<>();
+	private ComboBox<PersonalInfo> active = new ComboBox<>();
 	
 	private HorizontalLayout selecteds = new HorizontalLayout();
 	
@@ -43,50 +44,54 @@ public class MultiCombo extends VerticalLayout
 		active.addSelectionListener(event->{
 			if(active.getValue() != null && !active.getValue().equals(""))
 			{
-				selecteds.addComponent(new Choosed(active.getValue(), active.getValue()));
+				selecteds.addComponent(new Selected(active.getSelectedItem().get()));
 				active.setSelectedItem(null);
 			}
 		});
 	}
 	
-	public void setItems(String... items)
+	public void setItems(PersonalInfo items)
 	{
 		active.setItems(items);
 	}
 	
-	public void setItems(Collection<String> items)
+	public void setItems(Collection<PersonalInfo> items)
 	{
 		active.setItems(items);
 	}
 	
-	public Collection<Choosed> getAllSelected()
+	public Collection<PersonalInfo> getAllSelected()
 	{
-		Vector<Choosed> results = new Vector<>();
+		Vector<PersonalInfo> results = new Vector<>();
 		
-		Iterator<Component> iterator = iterator();
+		Iterator<Component> iterator = selecteds.iterator();
 		while (iterator.hasNext())
 		{
 			Component com = (Component) iterator.next();
-			if(com instanceof Choosed)
-				results.add((Choosed)com);
+			if(com instanceof Selected)
+				results.add(((Selected)com).getBean());
 		}
 		
 		return results;
 	}
 	
 	@Getter
-	private class Choosed extends HorizontalLayout
+	private class Selected extends HorizontalLayout
 	{
-		private String id;
+		private PersonalInfo bean;
 		
 		private Label label = new Label();
 		
 		private Button close = new Button(VaadinIcons.CLOSE_SMALL);
 		
-		public Choosed(String id,String value)
+		public Selected(PersonalInfo info)
 		{
-			this.id = id;
-			label.setValue(value);
+			if(info == null)
+				throw new RuntimeException("User information cannot be null");
+			
+			this.bean = info;
+			
+			label.setValue(info.getName());
 			
 			close.setWidth("20px");
 			close.setHeight("20px");

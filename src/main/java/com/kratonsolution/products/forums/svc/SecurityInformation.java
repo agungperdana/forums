@@ -98,4 +98,9 @@ public class SecurityInformation implements UserDetails
 	{
 		return user.getName();
 	}
+	
+	public String getUserEmail()
+	{
+		return user.getEmail();
+	}
 }
