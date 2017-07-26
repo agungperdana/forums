@@ -3,6 +3,8 @@
  */
 package com.kratonsolution.products.forums.dm;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
@@ -11,5 +13,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface TribeRepository extends MongoRepository<Tribe, String>
 {
-
+	public List<Tribe> findAllByCreatorEmail(String email);
 }

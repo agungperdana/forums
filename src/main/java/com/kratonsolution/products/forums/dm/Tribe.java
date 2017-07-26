@@ -41,7 +41,9 @@ public class Tribe implements Serializable
 	
 	private PersonalInfo chieftain;
 	
-	private Set<TribeRole> roles = new HashSet<>();
+	private PersonalInfo creator;
+	
+	private Set<PersonalInfo> contributors = new HashSet<>();
 	
 	private Set<TribeStatus> statuses = new HashSet<>();
 	
@@ -52,8 +54,6 @@ public class Tribe implements Serializable
 	private Set<TribePicture> pictures = new HashSet<>();
 	
 	private Set<TribeFollower> followers = new HashSet<>();
-	
-	private Set<PersonalInfo> contributors = new HashSet<>();
 	
 	public Tribe(){}
 }

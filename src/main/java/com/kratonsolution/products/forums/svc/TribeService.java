@@ -36,6 +36,11 @@ public class TribeService
 	{
 		return repository.findAll();
 	}
+	
+	public List<Tribe> findAll(String creatorEmail)
+	{
+		return repository.findAllByCreatorEmail(creatorEmail);
+	}
 
 	public int size()
 	{

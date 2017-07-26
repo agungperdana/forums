@@ -47,6 +47,14 @@ public class DateUtil
 		return null;
 	}
 	
+	public static Timestamp toTimestamp(Date date)
+	{
+		if(date != null)
+			return new Timestamp(date.getTime());
+	
+		return null;
+	}
+	
 	public static Timestamp toTimestamp(LocalDateTime localDateTime)
 	{
 		if(localDateTime != null)

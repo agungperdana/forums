@@ -3,8 +3,13 @@
  */
 package com.kratonsolution.products.forums.ui.tribe;
 
+import com.kratonsolution.products.forums.common.Security;
+import com.kratonsolution.products.forums.common.Springs;
+import com.kratonsolution.products.forums.dm.Tribe;
+import com.kratonsolution.products.forums.svc.TribeService;
 import com.kratonsolution.products.forums.ui.HomeContent;
 import com.kratonsolution.products.forums.ui.Icons;
+import com.kratonsolution.products.forums.ui.TribeDisplay;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -18,6 +23,8 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class ManageTribe extends VerticalLayout implements HomeContent
 {
+	private TribeService service = Springs.get(TribeService.class);
+	
 	public ManageTribe()
 	{
 		setWidth("100%");
@@ -40,6 +47,9 @@ public class ManageTribe extends VerticalLayout implements HomeContent
 		});
 		
 		mytribe.addComponent(addtribe);
+		
+		for(Tribe tribe:service.findAll(Security.getUserEmail()))
+			mytribe.addComponent(new TribeDisplay(tribe));
 		
 		Accordion news = new Accordion();
 		news.setStyleName(ValoTheme.ACCORDION_BORDERLESS);

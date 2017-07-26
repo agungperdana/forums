@@ -16,8 +16,6 @@ import com.kratonsolution.products.forums.common.Security;
 import com.kratonsolution.products.forums.common.Springs;
 import com.kratonsolution.products.forums.dm.PersonalInfo;
 import com.kratonsolution.products.forums.dm.Tribe;
-import com.kratonsolution.products.forums.dm.TribeRole;
-import com.kratonsolution.products.forums.dm.TribeRoleType;
 import com.kratonsolution.products.forums.dm.TribeStatus;
 import com.kratonsolution.products.forums.dm.TribeStatusType;
 import com.kratonsolution.products.forums.dm.User;
@@ -182,12 +180,9 @@ public class TribeForm extends Window
 				
 				bind.getBean().setLogo(handler.logo.toByteArray());
 				
-				TribeRole creator = new TribeRole();
+				PersonalInfo creator = new PersonalInfo();
 				creator.setEmail(Security.getUserEmail());
 				creator.setName(Security.getUserName());
-				creator.setType(TribeRoleType.FOUNDER);
-				
-				bind.getBean().getRoles().add(creator);
 				
 				TribeStatus created = new TribeStatus();
 				created.setCreatedTime(DateUtil.now());
@@ -195,6 +190,7 @@ public class TribeForm extends Window
 				
 				bind.getBean().getStatuses().add(created);
 				
+				bind.getBean().setCreator(creator);
 				bind.getBean().setCreated(DateUtil.toTimestamp(setup.getValue()));
 				bind.getBean().setChieftain(chief.getSelectedItem().get());
 				bind.getBean().getContributors().addAll(contribe.getAllSelected());
