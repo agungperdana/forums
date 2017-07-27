@@ -9,19 +9,36 @@ import java.io.InputStream;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * @author Agung Dodi Perdana
  * @email agung.dodi.perdana@gmail.com 
  */
-public class SmallPicture extends Image
+public class SmallPicture extends Panel
 {
-	public SmallPicture(){}
+	private VerticalLayout layout = new VerticalLayout();
+	
+	private Image image = new Image();
+	
+	public SmallPicture()
+	{
+		this(null);
+	}
 	
 	public SmallPicture(byte[] binary)
 	{
-		if(binary != null)
-			setSource(new StreamResource(new Handler(binary), "random"));
+		setWidth("99%");
+		setHeight("99%");
+
+		image.setSizeFull();
+		
+		layout.setWidth("100%");
+		layout.setHeight("100%");
+		layout.addComponent(image);
+		
+		setContent(layout);
 	}
 	
 	private class Handler implements StreamSource
@@ -46,6 +63,6 @@ public class SmallPicture extends Image
 	public void setBinary(byte[] binary)
 	{
 		if(binary != null)
-			setSource(new StreamResource(new Handler(binary), "random"));
+			image.setSource(new StreamResource(new Handler(binary), "random"));
 	}
 }

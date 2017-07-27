@@ -34,14 +34,13 @@ public class ManageTribe extends VerticalLayout implements HomeContent
 
 		HorizontalLayout mytribe = new HorizontalLayout();
 		mytribe.setStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
-		mytribe.setSizeFull();
 		mytribe.setSpacing(true);
 		mytribe.setMargin(true);
 		
-		Button addtribe = new Button(Icons.MY_OWN_TRIBE);
-		addtribe.setHeight("100px");
-		addtribe.setWidth("100px");
-		addtribe.setStyleName(ValoTheme.BUTTON_LINK);
+		Button addtribe = new Button("<span style='color:red;font-weight:bolder;white-space:normal'>CREATE <br/>MY OWN <br/>TRIBE</span>");
+		addtribe.setCaptionAsHtml(true);
+		addtribe.setHeight("100%");
+		addtribe.setWidth("100%");
 		addtribe.addClickListener(event->{
 			UI.getCurrent().addWindow(new TribeForm());
 		});
