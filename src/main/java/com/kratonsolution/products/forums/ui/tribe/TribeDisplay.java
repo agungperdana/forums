@@ -1,9 +1,10 @@
 /**
  * 
  */
-package com.kratonsolution.products.forums.ui;
+package com.kratonsolution.products.forums.ui.tribe;
 
 import com.kratonsolution.products.forums.dm.Tribe;
+import com.kratonsolution.products.forums.ui.SmallPicture;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;

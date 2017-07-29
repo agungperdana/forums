@@ -9,7 +9,6 @@ import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.svc.TribeService;
 import com.kratonsolution.products.forums.ui.HomeContent;
 import com.kratonsolution.products.forums.ui.Icons;
-import com.kratonsolution.products.forums.ui.TribeDisplay;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -37,10 +36,10 @@ public class ManageTribe extends VerticalLayout implements HomeContent
 		mytribe.setSpacing(true);
 		mytribe.setMargin(true);
 		
-		Button addtribe = new Button("<span style='color:red;font-weight:bolder;white-space:normal'>CREATE <br/>MY OWN <br/>TRIBE</span>");
-		addtribe.setCaptionAsHtml(true);
-		addtribe.setHeight("100%");
-		addtribe.setWidth("100%");
+		Button addtribe = new Button(Icons.MY_OWN_TRIBE);
+		addtribe.setStyleName(ValoTheme.BUTTON_ICON_ONLY);
+		addtribe.setHeight("100px");
+		addtribe.setWidth("100px");
 		addtribe.addClickListener(event->{
 			UI.getCurrent().addWindow(new TribeForm());
 		});

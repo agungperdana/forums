@@ -25,4 +25,10 @@ public class TribeStatus implements Serializable
 	private TribeStatusType type = TribeStatusType.CREATED;
 	
 	public TribeStatus(){}
+
+	@Override
+	public String toString()
+	{
+		return type.name();
+	}
 }

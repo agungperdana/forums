@@ -71,11 +71,11 @@ public class TribeService
 		}
 	}
 
-	public void delete(Collection<Tribe> users)
+	public void delete(Collection<Tribe> tribes)
 	{
-		if(users != null)
+		if(tribes != null)
 		{
-			for(Tribe tribe:users)
+			for(Tribe tribe:tribes)
 				delete(tribe.getId());
 		}
 	}

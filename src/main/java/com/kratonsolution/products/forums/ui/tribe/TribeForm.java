@@ -35,7 +35,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextArea;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
@@ -123,10 +123,10 @@ public class TribeForm extends Window
 		TextField name = new TextField("Tribe Name");
 		name.setWidth("100%");
 		
-		TextField note = new TextField("Short Description");
+		RichTextArea note = new RichTextArea("Short Description");
 		note.setWidth("100%");
 		
-		TextArea goal = new TextArea("Tribe Goal");
+		RichTextArea goal = new RichTextArea("Tribe Goal");
 		goal.setWidth("100%");
 		
 		DateTimeField setup = new DateTimeField("Setup Date");
@@ -190,6 +190,7 @@ public class TribeForm extends Window
 				
 				bind.getBean().getStatuses().add(created);
 				
+				bind.getBean().setLastStatus(created);
 				bind.getBean().setCreator(creator);
 				bind.getBean().setCreated(DateUtil.toTimestamp(setup.getValue()));
 				bind.getBean().setChieftain(chief.getSelectedItem().get());

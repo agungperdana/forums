@@ -6,6 +6,7 @@ package com.kratonsolution.products.forums.ui;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
+import com.kratonsolution.products.forums.ui.tribe.TribeTab;
 import com.kratonsolution.products.forums.ui.user.UserTab;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -50,10 +51,13 @@ public class Admin extends UI
 		mark3.addSeparator();
 
 		mark3.addItem("User",Icons.SIGN_IN, event->{
-			sheet.addTab(new UserTab(),"User",Icons.SIGN_IN);
+			sheet.addTab(new UserTab(),"User",Icons.SIGN_IN).setClosable(true);
 		});
 
-		mark3.addItem("Tribe Administration",VaadinIcons.BOOK, null);
+		mark3.addItem("Tribe Administration",VaadinIcons.BOOK, event->{
+			sheet.addTab(new TribeTab(),"Tribe Administration",VaadinIcons.BOOK).setClosable(true);
+		});
+		
 		mark3.addSeparator();
 		
 		mark3.addItem("Sign Out",VaadinIcons.SIGN_OUT, event->{
