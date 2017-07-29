@@ -29,13 +29,15 @@ public class SmallPicture extends Panel
 	
 	public SmallPicture(byte[] binary)
 	{
-		setWidth("99%");
-		setHeight("99%");
+		setWidth("100%");
+		setHeight("100%");
 
 		image.setSizeFull();
 		
 		layout.setWidth("100%");
 		layout.setHeight("100%");
+		layout.setMargin(false);
+		layout.setSpacing(false);
 		layout.addComponent(image);
 		
 		setContent(layout);

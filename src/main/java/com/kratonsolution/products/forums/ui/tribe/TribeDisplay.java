@@ -35,37 +35,38 @@ public class TribeDisplay extends Panel
 		setHeight("100px");
 		setWidth("275px");
 
-		layout.setMargin(true);
+		layout.setMargin(false);
 		layout.setHeight("100%");
 		layout.setWidth("100%");
 		layout.addComponent(picture);
 		layout.addComponent(contents);
-		layout.setExpandRatio(picture, 1f);
-		layout.setExpandRatio(contents, 3f);
+		layout.setExpandRatio(picture, 1.5f);
+		layout.setExpandRatio(contents, 2.5f);
 		layout.setComponentAlignment(picture, Alignment.MIDDLE_CENTER);
 		layout.setComponentAlignment(contents, Alignment.MIDDLE_CENTER);
 		
 		picture.setBinary(tribe.getLogo());
 		
 		title.setContentMode(ContentMode.HTML);
-		title.setValue("<span style='color:blue;font-size:13px;font-weight:bold;width:100%;border-bottom:solid black 1px'>"+tribe.getTitle()+"</span>");
+		title.setValue("<span style='color:blue;font-size:11px;font-weight:bold;width:100%;border-bottom:solid black 1px'>"+tribe.getTitle()+"</span>");
 		title.setWidth("100%");
 		
 		note.setContentMode(ContentMode.HTML);
-		note.setValue("<span style='width:100%;font-size:12px'>"+tribe.getNote()+"</span>");
+		note.setValue("<span style='width:100%;font-size:10px'>"+tribe.getNote()+"</span>");
 		
 		member.setContentMode(ContentMode.HTML);
-		member.setValue("<span style='color:red;font-size:11px;width:100%;'>Member ("+tribe.getFollowers()+")</span>");
+		member.setValue("<span style='color:red;font-size:9px;width:100%;font-weight:bold;'>Member ("+tribe.getFollowers()+")</span>");
 		member.setWidth("100%");
 		
-		contents.setHeight("100%");
+		contents.setHeight("99%");
 		contents.setWidth("100%");
-		contents.setSpacing(true);
+		contents.setSpacing(false);
+		contents.setMargin(false);
 		contents.addComponent(title);
 		contents.addComponent(note);
 		contents.addComponent(member);
 		contents.setExpandRatio(title, 1f);
-		contents.setExpandRatio(note, 4f);
+		contents.setExpandRatio(note, 3f);
 		contents.setExpandRatio(member, 1f);
 		contents.setComponentAlignment(title, Alignment.TOP_LEFT);
 		contents.setComponentAlignment(note, Alignment.MIDDLE_LEFT);

@@ -8,12 +8,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.dm.TribeRepository;
+import com.kratonsolution.products.forums.dm.TribeStatusType;
 
 /**
  * 
@@ -40,6 +44,11 @@ public class TribeService
 	public List<Tribe> findAll(String creatorEmail)
 	{
 		return repository.findAllByCreatorEmail(creatorEmail);
+	}
+	
+	public List<Tribe> findAllApproved()
+	{
+		return repository.findAllByLastStatusType(new PageRequest(0, 20,new Sort(new Order(Direction.DESC,"created"))),TribeStatusType.APPROVED);
 	}
 
 	public int size()

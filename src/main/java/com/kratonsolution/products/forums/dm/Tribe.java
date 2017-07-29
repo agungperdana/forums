@@ -51,8 +51,6 @@ public class Tribe implements Serializable
 	
 	private Set<TribeEvent> events = new HashSet<>();
 	
-	private Set<TribePicture> pictures = new HashSet<>();
-	
 	private Set<TribeFollower> followers = new HashSet<>();
 	
 	public Tribe(){}

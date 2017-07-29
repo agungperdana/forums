@@ -45,7 +45,7 @@ public class TribeTable extends Table<Tribe>
 		grid.addColumn(Tribe::getNote,new HtmlRenderer()).setCaption("Description").setExpandRatio(15);
 		grid.addColumn(Tribe::getGoal,new HtmlRenderer()).setCaption("Description").setExpandRatio(15);
 		grid.addColumn(Tribe::getCreator,new TextRenderer()).setCaption("Creator").setExpandRatio(1);
-		grid.addColumn(Tribe::getLastStatus,new TextRenderer()).setCaption("Status").setExpandRatio(1);
+		grid.addColumn(Tribe::getLastStatus,new TextRenderer()).setCaption("Status").setExpandRatio(2);
 		
 		grid.setDataProvider(new TribeProvider());
 		
@@ -116,6 +116,10 @@ public class TribeTable extends Table<Tribe>
 				tribe.getStatuses().add(status);
 				
 				service.edit(tribe);
+			
+				UI.getCurrent().removeWindow(Show.this);
+
+				refresh();
 			});
 			
 			if(!tribe.getLastStatus().getType().equals(TribeStatusType.CREATED))
