@@ -89,7 +89,7 @@ public class Registration extends Window
 		
 		Binder<User> binder = new Binder<>();
 		binder.setBean(new User());
-		binder.forField(email)
+		binder.forField(name)
 		  	  .withValidator(new StringLengthValidator("Name cannot be empty", 1, 150))
 		  	  .bind(User::getName,User::setName);
 		binder.forField(email)

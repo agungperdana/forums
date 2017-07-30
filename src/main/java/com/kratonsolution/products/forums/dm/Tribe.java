@@ -5,7 +5,9 @@ package com.kratonsolution.products.forums.dm;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,7 +45,7 @@ public class Tribe implements Serializable
 	
 	private PersonalInfo creator;
 	
-	private Set<PersonalInfo> contributors = new HashSet<>();
+	private List<PersonalInfo> contributors = new ArrayList<>();
 	
 	private Set<TribeStatus> statuses = new HashSet<>();
 	

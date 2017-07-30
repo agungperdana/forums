@@ -26,7 +26,10 @@ public class Security
 	{
 		SecurityInformation information = (SecurityInformation)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	if(information != null)
+    	{
+    		System.out.println(information.getUserEmail());
     		return information.getUserEmail();
+    	}
     	
     	return "";
 	}

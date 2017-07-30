@@ -41,9 +41,14 @@ public class TribeService
 		return repository.findAll();
 	}
 	
-	public List<Tribe> findAll(String creatorEmail)
+	public List<Tribe> findAllCreatedBy(String creatorEmail)
 	{
 		return repository.findAllByCreatorEmail(creatorEmail);
+	}
+	
+	public List<Tribe> findAllInvolved(String email)
+	{
+		return repository.findAllByEmail(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"created"))),email);
 	}
 	
 	public List<Tribe> findAllApproved()

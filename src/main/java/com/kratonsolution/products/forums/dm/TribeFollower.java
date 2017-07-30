@@ -3,7 +3,8 @@
  */
 package com.kratonsolution.products.forums.dm;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,11 +17,11 @@ import lombok.Setter;
 @Setter
 public class TribeFollower
 {
-	private String email;
+	private String id = UUID.randomUUID().toString();
 	
-	private String name;
+	private Timestamp joinDate;
 	
-	private Date joinDate;
+	private PersonalInfo person;
 
 	public TribeFollower(){}
 }

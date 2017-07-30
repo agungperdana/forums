@@ -41,12 +41,11 @@ public class TribeTable extends Table<Tribe>
 		grid.setWidth("100%");
 		grid.setHeight("100%");
 		grid.setSelectionMode(SelectionMode.MULTI);
+		grid.addColumn(Tribe::getLastStatus,new TextRenderer()).setCaption("Status").setExpandRatio(2);
 		grid.addColumn(Tribe::getTitle,new TextRenderer()).setCaption("Name").setExpandRatio(15);
 		grid.addColumn(Tribe::getNote,new HtmlRenderer()).setCaption("Description").setExpandRatio(15);
 		grid.addColumn(Tribe::getGoal,new HtmlRenderer()).setCaption("Description").setExpandRatio(15);
 		grid.addColumn(Tribe::getCreator,new TextRenderer()).setCaption("Creator").setExpandRatio(1);
-		grid.addColumn(Tribe::getLastStatus,new TextRenderer()).setCaption("Status").setExpandRatio(2);
-		
 		grid.setDataProvider(new TribeProvider());
 		
 		toolbar.getAdd().setCommand(event->{});

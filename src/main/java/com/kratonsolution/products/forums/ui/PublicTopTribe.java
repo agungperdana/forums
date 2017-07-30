@@ -26,7 +26,7 @@ public class PublicTopTribe extends TopTribe
 		super();
 		
 		layout.setMargin(new MarginInfo(true,false,false,false));
-		layout.setSpacing(false);
+		layout.setSpacing(true);
 		
 		for(Tribe tribe:service.findAllApproved())
 		{

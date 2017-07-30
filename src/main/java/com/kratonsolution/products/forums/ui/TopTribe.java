@@ -19,6 +19,9 @@ public abstract class TopTribe extends Accordion
 	{
 		setWidth("100%");
 		setHeight("99%");
+		
+		layout.setSpacing(true);
+		
 		addTab(layout,"Top Tribe",Icons.TRIBE_TOP);
 		setStyleName(ValoTheme.ACCORDION_BORDERLESS);
 	}

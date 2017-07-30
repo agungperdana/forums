@@ -23,6 +23,7 @@ import com.kratonsolution.products.forums.dm.UserRepository;
 import com.kratonsolution.products.forums.svc.TribeService;
 import com.kratonsolution.products.forums.ui.Icons;
 import com.kratonsolution.products.forums.ui.MultiCombo;
+import com.kratonsolution.products.forums.ui.UIRefreshListener;
 import com.vaadin.data.Binder;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.StreamResource;
@@ -67,6 +68,8 @@ public class TribeForm extends Window
 	private Button tribeLogo = new Button("128 X 128");
 	
 	private Upload uploader = new Upload("Choose Logo",handler);
+	
+	private Vector<UIRefreshListener> listeners = new Vector<>();
 	
 	public TribeForm()
 	{
@@ -200,6 +203,8 @@ public class TribeForm extends Window
 				
 				Notification.show("Tribe creation success.");
 				
+				listeners.forEach(listener->{listener.refresh(null);});
+				
 				UI.getCurrent().removeWindow(TribeForm.this);
 			}
 			else
@@ -240,5 +245,11 @@ public class TribeForm extends Window
 		{
 			return new ByteArrayInputStream(logo.toByteArray());
 		}
+	}
+	
+	public void addUIRefreshListener(UIRefreshListener listener)
+	{
+		if(listener != null)
+			listeners.add(listener);
 	}
 }
