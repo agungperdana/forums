@@ -37,6 +37,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
@@ -51,13 +52,19 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Agung Dodi Perdana
  * @email agung.dodi.perdana@gmail.com 
  */
-public class TribeForm extends Window
+public class TribeEditForm extends Window
 {
+	private TabSheet sheet = new TabSheet();
+	
+	private HorizontalLayout infoLayout = new HorizontalLayout();
+	
+	private HorizontalLayout newsLayout = new HorizontalLayout();
+	
+	private VerticalLayout eventLayout = new VerticalLayout();
+	
 	private UserRepository repository = Springs.get(UserRepository.class);
 	
 	private TribeService service = Springs.get(TribeService.class);
-	
-	private HorizontalLayout layout = new HorizontalLayout();
 	
 	private FormLayout left = new FormLayout();
 	
@@ -71,11 +78,11 @@ public class TribeForm extends Window
 	
 	private Vector<TribeListener> listeners = new Vector<>();
 	
-	public TribeForm()
+	public TribeEditForm(Tribe tribe)
 	{
-		setWidth("815px");
-		setHeight("625px");
-		setCaption("Create New Tribe");
+		setWidth("85%");
+		setHeight("95%");
+		setCaption("Edit Tribe");
 		setIcon(Icons.TRIBE_TOP);
 		setModal(true);
 		setResizable(false);
@@ -107,48 +114,67 @@ public class TribeForm extends Window
 		right.setExpandRatio(tribeLogo, 1f);
 		right.setExpandRatio(uploader, 2f);
 		
-		layout.setMargin(true);
-		layout.setWidth("100%");
-		layout.setHeight("100%");
-		layout.addComponent(panel);
-		layout.addComponent(right);
-		layout.setExpandRatio(panel, 3f);
-		layout.setExpandRatio(right, 1f);
+		infoLayout.setMargin(true);
+		infoLayout.setWidth("100%");
+		infoLayout.setHeight("100%");
+		infoLayout.addComponent(panel);
+		infoLayout.addComponent(right);
+		infoLayout.setExpandRatio(panel, 3f);
+		infoLayout.setExpandRatio(right, 1f);
 		
-		setContent(layout);
+		newsLayout.setStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
+		newsLayout.setMargin(true);
+		newsLayout.setSpacing(true);
 		
-		buildInfo();
+		sheet.setWidth("99%");
+		sheet.setHeight("99%");
+		
+		sheet.addTab(infoLayout, "Tribe Information");
+		sheet.addTab(newsLayout, "Tribe News");
+		sheet.addTab(eventLayout, "Tribe Event");
+		
+		setContent(sheet);
+		
+		buildInfo(tribe);
+		buildNews(tribe);
 	}
 	
-	private void buildInfo()
+	private void buildInfo(Tribe tribe)
 	{
+		tribeLogo.setCaption(null);
+		tribeLogo.setIcon(new StreamResource(new IconStream(tribe.getLogo()),"nonane"));
 		
 		TextField name = new TextField("Tribe Name");
 		name.setWidth("100%");
+		name.setValue(tribe.getTitle());
 		
 		RichTextArea note = new RichTextArea("Short Description");
 		note.setWidth("100%");
+		note.setValue(tribe.getNote());
 		
 		RichTextArea goal = new RichTextArea("Tribe Goal");
 		goal.setWidth("100%");
+		goal.setValue(tribe.getGoal());
 		
 		DateTimeField setup = new DateTimeField("Setup Date");
 		setup.setValue(LocalDateTime.now(ZoneId.systemDefault()));
 		setup.setEnabled(false);
+		setup.setValue(DateUtil.toLocalDateTime(tribe.getCreated()));
 		
 		TextField member = new TextField("Tribe Member");
 		member.setEnabled(false);
 		member.setWidth("50px");
-		member.setValue("1");
+		member.setValue(tribe.getFollowers().size()+"");
 		
 		TextField founder = new TextField("Tribe Founder");
 		founder.setEnabled(false);
-		founder.setValue(Security.getUserName());
+		founder.setValue(tribe.getCreator().getName());
 		
 		ComboBox<PersonalInfo> chief = new ComboBox<>("Tribe Chieftain");
 		chief.setWidth("100%");
 		
 		MultiCombo contribe = new MultiCombo("Contributor");
+		contribe.setSelecteds(tribe.getContributors());
 		
 		Vector<PersonalInfo> users = new Vector<>();
 		
@@ -168,13 +194,15 @@ public class TribeForm extends Window
 		chief.setItems(users);
 		contribe.setItems(users);
 		
+		chief.setSelectedItem(tribe.getChieftain());
+		
 		Binder<Tribe> bind = new Binder<>();
 		bind.forField(name).withValidator(new StringLengthValidator("Name cannot be empty", 1, 500)).bind(Tribe::getTitle,Tribe::setTitle);
 		bind.forField(note).withValidator(new StringLengthValidator("Description cannot be empty", 1, 500)).bind(Tribe::getNote,Tribe::setNote);
 		bind.forField(goal).withValidator(new StringLengthValidator("Goal cannot be empty", 1, 500)).bind(Tribe::getGoal,Tribe::setGoal);
-		bind.setBean(new Tribe());
+		bind.setBean(tribe);
 		
-		Button button = new Button("SUBMIT THIS TRIBE");
+		Button button = new Button("UPDATE THIS TRIBE");
 		button.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		button.addClickListener(event->{
 			if(bind.validate().isOk())
@@ -199,13 +227,13 @@ public class TribeForm extends Window
 				bind.getBean().setChieftain(chief.getSelectedItem().get());
 				bind.getBean().getContributors().addAll(contribe.getAllSelected());
 				
-				service.add(bind.getBean());
+				service.edit(bind.getBean());
 				
 				Notification.show("Tribe creation success.");
 				
 				listeners.forEach(listener->{listener.refresh(null);});
 				
-				UI.getCurrent().removeWindow(TribeForm.this);
+				UI.getCurrent().removeWindow(TribeEditForm.this);
 			}
 			else
 				Notification.show("Tribe creation failed.");
@@ -220,6 +248,31 @@ public class TribeForm extends Window
 		left.addComponent(chief);
 		left.addComponent(contribe);
 		left.addComponent(button);
+	}
+	
+	private void buildNews(Tribe tribe)
+	{
+		newsLayout.removeAllComponents();
+		
+		Button add = new Button("Create News");
+		add.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+		add.setWidth("250px");
+		add.setHeight("250px");
+		add.addClickListener(click->{
+			
+			TribeNewsForm form = new TribeNewsForm(tribe);
+			form.addTribeListener(listener->{
+				buildInfo(tribe);
+			});
+
+			UI.getCurrent().addWindow(form);
+		});
+		
+		newsLayout.addComponent(add);
+		
+		tribe.getNews().forEach(news->{
+			newsLayout.addComponent(new NewsDisplay(tribe,news));
+		});
 	}
 	
 	private class UploadHandler implements Receiver,SucceededListener,StreamSource
@@ -247,9 +300,27 @@ public class TribeForm extends Window
 		}
 	}
 	
+	private class IconStream implements StreamSource
+	{
+		byte[] images;
+		
+		public IconStream(byte[] imgs)
+		{
+			this.images = imgs;
+		}
+		
+		@Override
+		public InputStream getStream()
+		{
+			return new ByteArrayInputStream(images);
+		}
+		
+	}
+	
 	public void addTribeListener(TribeListener listener)
 	{
 		if(listener != null)
 			listeners.add(listener);
 	}
+	
 }

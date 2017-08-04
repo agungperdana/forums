@@ -1,5 +1,6 @@
 package com.kratonsolution.products.forums.common;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -15,6 +16,8 @@ import java.util.Date;
  */
 public class DateUtil
 {
+	private final static SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+	
 	public static LocalDate toLocalDate(Date date)
 	{
 		if(date != null)
@@ -74,5 +77,13 @@ public class DateUtil
 	public static Timestamp now()
 	{
 		return new Timestamp(System.currentTimeMillis());
+	}
+	
+	public static String format(Date date)
+	{
+		if(date != null)
+			return format.format(date);
+		
+		return "";
 	}
 }

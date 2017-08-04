@@ -4,7 +4,7 @@
 package com.kratonsolution.products.forums.ui;
 
 import com.vaadin.ui.Accordion;
-import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 /**
@@ -13,7 +13,7 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public abstract class TopTribeNews extends Accordion
 {
-	protected GridLayout layout = new GridLayout(3, 4);
+	protected HorizontalLayout layout = new HorizontalLayout();
 
 	public TopTribeNews()
 	{
@@ -22,8 +22,8 @@ public abstract class TopTribeNews extends Accordion
 		addTab(layout,"Top Tribe News",Icons.TRIBE_NEWS);
 		setStyleName(ValoTheme.ACCORDION_BORDERLESS);
 
-		layout.setWidth("100%");
 		layout.setSpacing(true);
 		layout.setMargin(true);
+		layout.setStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
 	}
 }

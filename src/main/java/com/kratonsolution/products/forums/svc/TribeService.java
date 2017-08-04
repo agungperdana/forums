@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.kratonsolution.products.forums.common.Security;
 import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.dm.TribeRepository;
 import com.kratonsolution.products.forums.dm.TribeStatusType;
@@ -38,7 +39,7 @@ public class TribeService
 
 	public List<Tribe> findAll()
 	{
-		return repository.findAll();
+		return repository.findAll(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"created")))).getContent();
 	}
 	
 	public List<Tribe> findAllCreatedBy(String creatorEmail)
@@ -46,9 +47,14 @@ public class TribeService
 		return repository.findAllByCreatorEmail(creatorEmail);
 	}
 	
-	public List<Tribe> findAllInvolved(String email)
+	public List<Tribe> findAllInvolved()
 	{
-		return repository.findAllByEmail(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"created"))),email);
+		return repository.findAllByEmail(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"created"))),Security.getUserEmail());
+	}
+	
+	public List<Tribe> findAllMyTribe()
+	{
+		return repository.findAllMyTribe(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"created"))),Security.getUserEmail());
 	}
 	
 	public List<Tribe> findAllApproved()

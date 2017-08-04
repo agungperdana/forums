@@ -21,4 +21,7 @@ public interface TribeRepository extends MongoRepository<Tribe, String>
 	
 	@Query("{$or:[ {creator.email: ?0}, {chieftain.email: ?0}, {contributors.email:?0} ]}")
 	public List<Tribe> findAllByEmail(Pageable pageable,String email);
+	
+	@Query("{creator.email: ?0}")
+	public List<Tribe> findAllMyTribe(Pageable pageable,String email);
 }

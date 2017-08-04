@@ -60,6 +60,13 @@ public class MultiCombo extends VerticalLayout
 		active.setItems(items);
 	}
 	
+	public void setSelecteds(Collection<PersonalInfo> items)
+	{
+		items.forEach(item->{
+			selecteds.addComponent(new Selected(item));
+		});
+	}
+	
 	public Collection<PersonalInfo> getAllSelected()
 	{
 		Vector<PersonalInfo> results = new Vector<>();

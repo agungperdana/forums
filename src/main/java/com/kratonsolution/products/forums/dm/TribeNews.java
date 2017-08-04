@@ -22,18 +22,22 @@ public class TribeNews implements Serializable
 {
 	private String id = UUID.randomUUID().toString();
 
-	private Timestamp timeCreated;
+	private String genre;
 	
 	private String title;
 	
-	private String note;
+	private Timestamp timeCreated;
 	
+	private PersonalInfo creator;
+
 	private String tags;
+	
+	private String description;
 	
 	private byte[] picture;
 	
-	private PersonalInfo creator;
-	
+	private int views;
+
 	private List<Comment> comments = new ArrayList<Comment>();
 	
 	public TribeNews(){}

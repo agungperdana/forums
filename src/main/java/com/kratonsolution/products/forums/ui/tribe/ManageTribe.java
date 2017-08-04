@@ -3,14 +3,13 @@
  */
 package com.kratonsolution.products.forums.ui.tribe;
 
-import com.kratonsolution.products.forums.common.Security;
 import com.kratonsolution.products.forums.common.Springs;
 import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.svc.TribeService;
 import com.kratonsolution.products.forums.ui.HomeContent;
 import com.kratonsolution.products.forums.ui.Icons;
-import com.kratonsolution.products.forums.ui.RefreshEvent;
-import com.kratonsolution.products.forums.ui.UIRefreshListener;
+import com.kratonsolution.products.forums.ui.TribeEvent;
+import com.kratonsolution.products.forums.ui.TribeListener;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -22,7 +21,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Agung Dodi Perdana
  * @email agung.dodi.perdana@gmail.com 
  */
-public class ManageTribe extends VerticalLayout implements HomeContent, UIRefreshListener
+public class ManageTribe extends VerticalLayout implements HomeContent, TribeListener
 {
 	private TribeService service = Springs.get(TribeService.class);
 
@@ -51,7 +50,10 @@ public class ManageTribe extends VerticalLayout implements HomeContent, UIRefres
 		addtribe.setHeight("100px");
 		addtribe.setWidth("100px");
 		addtribe.addClickListener(event->{
-			UI.getCurrent().addWindow(new TribeForm());
+			TribeForm form = new TribeForm();
+			form.addTribeListener(ManageTribe.this);
+			
+			UI.getCurrent().addWindow(form);
 		});
 
 		Accordion myTribe = new Accordion();
@@ -69,7 +71,7 @@ public class ManageTribe extends VerticalLayout implements HomeContent, UIRefres
 		addComponent(browseTribe);
 
 		populateMyTribeContent();
-		populateBroweTribe();
+		populateBrowseTribe();
 	}
 
 	private void populateMyTribeContent()
@@ -78,18 +80,18 @@ public class ManageTribe extends VerticalLayout implements HomeContent, UIRefres
 		
 		mytribeLayout.addComponent(addtribe);
 
-		for(Tribe tribe:service.findAllInvolved(Security.getUserEmail()))
+		for(Tribe tribe:service.findAllInvolved())
 		{
 			TribeDisplay display = new TribeDisplay(tribe);
 			display.addClickListener(click->{
-
+				UI.getCurrent().addWindow(new TribeEditForm(tribe));
 			});
 
 			mytribeLayout.addComponent(display);
 		}
 	}
 	
-	private void populateBroweTribe()
+	private void populateBrowseTribe()
 	{
 		for(Tribe tribe:service.findAllApproved())
 		{
@@ -103,9 +105,9 @@ public class ManageTribe extends VerticalLayout implements HomeContent, UIRefres
 	}
 
 	@Override
-	public void refresh(RefreshEvent event)
+	public void refresh(TribeEvent event)
 	{
 		populateMyTribeContent();
-		populateBroweTribe();
+		populateBrowseTribe();
 	}
 }
