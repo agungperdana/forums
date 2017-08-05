@@ -11,11 +11,11 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Agung Dodi Perdana
  * @email agung.dodi.perdana@gmail.com 
  */
-public abstract class TrieEvent extends Accordion
+public abstract class TribeEventUI extends Accordion
 {
 	protected VerticalLayout layout = new VerticalLayout();
 	
-	public TrieEvent()
+	public TribeEventUI()
 	{
 		setWidth("100%");
 		setHeight("99%");

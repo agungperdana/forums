@@ -3,6 +3,9 @@
  */
 package com.kratonsolution.products.forums.ui;
 
+import com.kratonsolution.products.forums.common.Springs;
+import com.kratonsolution.products.forums.svc.TribeEventService;
+import com.kratonsolution.products.forums.ui.tribe.EventDisplay;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 
@@ -12,16 +15,16 @@ import com.vaadin.spring.annotation.UIScope;
  */
 @SpringComponent
 @UIScope
-public class PublicTribeEvent extends TrieEvent
+public class PublicTribeEvent extends TribeEventUI
 {
+	private TribeEventService service = Springs.get(TribeEventService.class);
+	
 	public PublicTribeEvent()
 	{
 		super();
-		
-		layout.addComponent(new HPost());
-		layout.addComponent(new HPost());
-		layout.addComponent(new HPost());
-		layout.addComponent(new HPost());
-		layout.addComponent(new HPost());
+	
+		service.findAll().forEach(event->{
+			layout.addComponent(new EventDisplay(event));
+		});
 	}
 }

@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,14 +24,11 @@ public class TribeEvent implements Serializable
 	@Id
 	private String id = UUID.randomUUID().toString();
 
-	private Timestamp timeCreated;
+	private Timestamp created;
 	
-	@Indexed
-	private String title;
+	private String description;
 	
-	private String note;
-	
-	private String creator;
+	private PersonalInfo creator;
 	
 	@DBRef
 	private Tribe tribe;

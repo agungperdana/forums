@@ -126,6 +126,10 @@ public class TribeEditForm extends Window
 		newsLayout.setMargin(true);
 		newsLayout.setSpacing(true);
 		
+		eventLayout.setStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
+		eventLayout.setMargin(true);
+		eventLayout.setSpacing(true);
+		
 		sheet.setWidth("99%");
 		sheet.setHeight("99%");
 		
@@ -137,6 +141,7 @@ public class TribeEditForm extends Window
 		
 		buildInfo(tribe);
 		buildNews(tribe);
+		buildEvent(tribe);
 	}
 	
 	private void buildInfo(Tribe tribe)
@@ -272,6 +277,31 @@ public class TribeEditForm extends Window
 		
 		tribe.getNews().forEach(news->{
 			newsLayout.addComponent(new NewsDisplay(news));
+		});
+	}
+	
+	private void buildEvent(Tribe tribe)
+	{
+		eventLayout.removeAllComponents();
+		
+		Button add = new Button("Create Event");
+		add.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+		add.setWidth("100px");
+		add.setHeight("100px");
+		add.addClickListener(click->{
+			
+			TribeEventForm form = new TribeEventForm(tribe);
+			form.addTribeListener(listener->{
+				buildInfo(service.findOne(tribe.getId()));
+			});
+
+			UI.getCurrent().addWindow(form);
+		});
+		
+		eventLayout.addComponent(add);
+		
+		tribe.getEvents().forEach(event->{
+			eventLayout.addComponent(new EventDisplay(event));
 		});
 	}
 	
