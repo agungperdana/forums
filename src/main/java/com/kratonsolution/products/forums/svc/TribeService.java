@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kratonsolution.products.forums.common.Security;
 import com.kratonsolution.products.forums.dm.Tribe;
+import com.kratonsolution.products.forums.dm.TribeEventRepository;
+import com.kratonsolution.products.forums.dm.TribeNewsRepository;
 import com.kratonsolution.products.forums.dm.TribeRepository;
 import com.kratonsolution.products.forums.dm.TribeStatusType;
 
@@ -31,7 +33,13 @@ public class TribeService
 {
 	@Autowired
 	private TribeRepository repository;
+	
+	@Autowired
+	private TribeNewsRepository newsRepository;
 
+	@Autowired
+	private TribeEventRepository eventRepository;
+	
 	public Tribe findOne(String id)
 	{
 		return repository.findOne(id);
@@ -79,6 +87,14 @@ public class TribeService
 
 	public void edit(Tribe tribe)
 	{
+		tribe.getNews().forEach(news->{
+			newsRepository.save(news);
+		});
+		
+		tribe.getEvents().forEach(event->{
+			eventRepository.save(event);
+		});
+		
 		repository.save(tribe);
 	}
 
@@ -87,6 +103,14 @@ public class TribeService
 		Tribe tribe = repository.findOne(id);
 		if(tribe != null)
 		{
+			tribe.getNews().forEach(news->{
+				newsRepository.delete(news);
+			});
+			
+			tribe.getEvents().forEach(event->{
+				eventRepository.delete(event);
+			});
+			
 			repository.delete(tribe);
 		}
 	}

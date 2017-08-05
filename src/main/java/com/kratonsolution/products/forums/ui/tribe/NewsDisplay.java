@@ -4,7 +4,6 @@
 package com.kratonsolution.products.forums.ui.tribe;
 
 import com.kratonsolution.products.forums.common.DateUtil;
-import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.dm.TribeNews;
 import com.kratonsolution.products.forums.ui.DBImage;
 import com.vaadin.shared.ui.ContentMode;
@@ -25,28 +24,23 @@ public class NewsDisplay extends Panel
 	
 	private Label description = new Label(null, ContentMode.HTML);
 	
-	public NewsDisplay(Tribe tribe,TribeNews news)
+	public NewsDisplay(TribeNews news)
 	{
 		setWidth("250px");
 		setHeight("250px");
 		
-		Panel img = new Panel();
-		img.setWidth("100%");
-		img.setHeight("100%");
-		img.setContent(image);
-		
 		description.setWidth("100%");
 		description.setHeight("100%");
 		
-		layout.setMargin(true);
+		layout.setMargin(false);
 		layout.setSpacing(true);
 		layout.setWidth("100%");
 		layout.setHeight("100%");
-		layout.addComponent(img);
+		layout.addComponent(image);
 		layout.addComponent(description);
-		layout.setComponentAlignment(img, Alignment.MIDDLE_CENTER);
+		layout.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
 		layout.setComponentAlignment(description, Alignment.MIDDLE_CENTER);
-		layout.setExpandRatio(img, 3f);
+		layout.setExpandRatio(image, 3f);
 		layout.setExpandRatio(description, 2f);
 		
 		if(news != null)
@@ -54,7 +48,7 @@ public class NewsDisplay extends Panel
 			image.setByte(news.getPicture());
 			
 			StringBuilder buffer = new StringBuilder();
-			buffer.append("<table style='border:none;width:100%'>");
+			buffer.append("<table style='border:none;width:100%;border-top:solid silver 1px;'>");
 			buffer.append("<tbody>");
 			buffer.append("<tr><td colspan='4' style='font-weight:bolder;font-size:10px;color:red'>"+news.getGenre().toUpperCase()+":"+news.getTitle().toUpperCase()+"</td></tr>");
 			buffer.append("<tr>");

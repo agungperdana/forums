@@ -262,7 +262,7 @@ public class TribeEditForm extends Window
 			
 			TribeNewsForm form = new TribeNewsForm(tribe);
 			form.addTribeListener(listener->{
-				buildInfo(tribe);
+				buildInfo(service.findOne(tribe.getId()));
 			});
 
 			UI.getCurrent().addWindow(form);
@@ -271,7 +271,7 @@ public class TribeEditForm extends Window
 		newsLayout.addComponent(add);
 		
 		tribe.getNews().forEach(news->{
-			newsLayout.addComponent(new NewsDisplay(tribe,news));
+			newsLayout.addComponent(new NewsDisplay(news));
 		});
 	}
 	

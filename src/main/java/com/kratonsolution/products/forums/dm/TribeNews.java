@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,18 +23,23 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Document(collection="tribe_news")
 public class TribeNews implements Serializable
 {
+	@Id
 	private String id = UUID.randomUUID().toString();
 
+	@Indexed
 	private String genre;
 	
+	@Indexed
 	private String title;
 	
 	private Timestamp timeCreated;
 	
 	private PersonalInfo creator;
 
+	@Indexed
 	private String tags;
 	
 	private String description;
@@ -38,6 +48,9 @@ public class TribeNews implements Serializable
 	
 	private int views;
 
+	@DBRef
+	private Tribe tribe;
+	
 	private List<Comment> comments = new ArrayList<Comment>();
 	
 	public TribeNews(){}

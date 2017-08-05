@@ -158,6 +158,7 @@ public class TribeNewsForm extends Window
 				
 				bind.getBean().setCreator(owner);
 				bind.getBean().setTimeCreated(DateUtil.toTimestamp(createdDate.getValue()));
+				bind.getBean().setTribe(tribe);
 				
 				tribe.getNews().add(bind.getBean());
 				
