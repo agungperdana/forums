@@ -60,7 +60,7 @@ public class TribeEditForm extends Window
 	
 	private HorizontalLayout newsLayout = new HorizontalLayout();
 	
-	private VerticalLayout eventLayout = new VerticalLayout();
+	private HorizontalLayout eventLayout = new HorizontalLayout();
 	
 	private UserRepository repository = Springs.get(UserRepository.class);
 	
@@ -286,7 +286,6 @@ public class TribeEditForm extends Window
 		
 		Button add = new Button("Create Event");
 		add.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-		add.setWidth("100px");
 		add.setHeight("100px");
 		add.addClickListener(click->{
 			
