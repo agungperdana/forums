@@ -19,6 +19,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -28,7 +29,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @email agung.dodi.perdana@gmail.com 
  */
 @SpringUI(path="/Admin")
-@Theme("forums")
+@Theme("light")
 @Title("Mark 3")
 @Viewport("user-scalable=no,initial-scale=1.0")
 public class Admin extends UI
@@ -37,13 +38,9 @@ public class Admin extends UI
 	protected void init(VaadinRequest request)
 	{
 		TabSheet sheet = new TabSheet();
-		sheet.setWidth("100%");
-		sheet.setStyleName(ValoTheme.TABLE_BORDERLESS);
 		
 		MenuBar bar = new MenuBar();
-		bar.setStyleName(ValoTheme.MENUBAR_SMALL);
-		bar.setWidth("100%");
-		bar.setHeight("35px");
+		bar.setStyleName(ValoTheme.MENUBAR_BORDERLESS+" "+ValoTheme.MENUBAR_SMALL);
 		MenuItem mark3 = bar.addItem("",VaadinIcons.BUG_O, null);
 		mark3.addItem("Preferences",VaadinIcons.TOOLS, event->{
 			UI.getCurrent().addWindow(new Preferences());
@@ -51,11 +48,15 @@ public class Admin extends UI
 		mark3.addSeparator();
 
 		mark3.addItem("User",Icons.SIGN_IN, event->{
-			sheet.addTab(new UserTab(),"User",Icons.SIGN_IN).setClosable(true);
+			Tab on = sheet.addTab(new UserTab(),"User",Icons.SIGN_IN);
+			on.setClosable(true);
+			sheet.setSelectedTab(on);
 		});
 
 		mark3.addItem("Tribe Administration",VaadinIcons.BOOK, event->{
-			sheet.addTab(new TribeTab(),"Tribe Administration",VaadinIcons.BOOK).setClosable(true);
+			Tab on = sheet.addTab(new TribeTab(),"Tribe Administration",VaadinIcons.BOOK);
+			on.setClosable(true);
+			sheet.setSelectedTab(on);
 		});
 		
 		mark3.addSeparator();
@@ -67,16 +68,11 @@ public class Admin extends UI
 			Page.getCurrent().setLocation("/");
 		});
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setWidth("100%");
-		layout.setHeight("100%");
-		layout.setSpacing(false);
-		layout.setMargin(false);
-		layout.addComponent(bar);
-		layout.addComponent(sheet);
-		layout.setExpandRatio(bar, 0.6f);
-		layout.setExpandRatio(sheet, 13f);
+		VerticalLayout root = new VerticalLayout(bar);
+		root.setSpacing(false);
+		root.setMargin(false);
+		root.addComponentsAndExpand(sheet);
 		
-		setContent(layout);
+		setContent(root);
 	}
 }

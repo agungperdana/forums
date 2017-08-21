@@ -26,8 +26,8 @@ public class NewsDisplay extends Panel
 	
 	public NewsDisplay(TribeNews news)
 	{
-		setWidth("250px");
-		setHeight("250px");
+		setWidth("225px");
+		setHeight("265px");
 		
 		description.setWidth("100%");
 		description.setHeight("100%");
@@ -55,7 +55,7 @@ public class NewsDisplay extends Panel
 			buffer.append("<td width='15%' style='font-weight:bolder;font-size:8px'>Posted date:"+DateUtil.format(news.getTimeCreated())+"</td>");
 			buffer.append("<td width='20%' style='font-weight:bolder;font-size:8px'>Posted by:"+news.getCreator().getName()+"</td>");
 			buffer.append("<td width='60%' style='font-weight:bolder;font-size:8px'>Tags:"+news.getTags()+"</td>");
-			buffer.append("<td width='5%' style='font-weight:bolder;font-size:8px'>Viewed:"+news.getViews()+"</td>");
+			buffer.append("<td width='5%' style='font-weight:bolder;font-size:8px'>Viewed:"+news.getLikes()+"</td>");
 			buffer.append("</tr>");
 			buffer.append("<tr><td colspan='4'>"+news.getDescription()+"</td></tr>");
 			buffer.append("</tbody>");

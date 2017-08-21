@@ -36,7 +36,7 @@ public class SideMenu extends Panel
 	
 	private MenuBar signoutbar = new MenuBar();
 	
-	private MenuItem news = newsbar.addItem("What's New",null);
+	private MenuItem whatNew = newsbar.addItem("What's New",null);
 	
 	private MenuItem manage = managebar.addItem("Manage Tribe",null);
 	
@@ -88,8 +88,8 @@ public class SideMenu extends Panel
 		{
 			clearSelected();
 			
-			if(selected.equals(news))
-				news.setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT);
+			if(selected.equals(whatNew))
+				whatNew.setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT);
 			else if(selected.equals(manage))
 				manage.setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT);
 			else if(selected.equals(message))
@@ -101,7 +101,7 @@ public class SideMenu extends Panel
 	
 	private void clearSelected()
 	{
-		news.setIcon(null);
+		whatNew.setIcon(null);
 		manage.setIcon(null);
 		message.setIcon(null);
 		account.setIcon(null);

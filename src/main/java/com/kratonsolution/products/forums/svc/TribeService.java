@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kratonsolution.products.forums.common.Security;
 import com.kratonsolution.products.forums.dm.Tribe;
@@ -33,13 +32,13 @@ public class TribeService
 {
 	@Autowired
 	private TribeRepository repository;
-	
+
 	@Autowired
 	private TribeNewsRepository newsRepository;
 
 	@Autowired
 	private TribeEventRepository eventRepository;
-	
+
 	public Tribe findOne(String id)
 	{
 		return repository.findOne(id);
@@ -49,22 +48,22 @@ public class TribeService
 	{
 		return repository.findAll(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"created")))).getContent();
 	}
-	
+
 	public List<Tribe> findAllCreatedBy(String creatorEmail)
 	{
 		return repository.findAllByCreatorEmail(creatorEmail);
 	}
-	
+
 	public List<Tribe> findAllInvolved()
 	{
 		return repository.findAllByEmail(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"created"))),Security.getUserEmail());
 	}
-	
+
 	public List<Tribe> findAllMyTribe()
 	{
 		return repository.findAllMyTribe(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"created"))),Security.getUserEmail());
 	}
-	
+
 	public List<Tribe> findAllApproved()
 	{
 		return repository.findAllByLastStatusType(new PageRequest(0, 20,new Sort(new Order(Direction.DESC,"created"))),TribeStatusType.APPROVED);
@@ -85,34 +84,32 @@ public class TribeService
 		repository.save(tribe);
 	}
 
-	public void edit(Tribe tribe)
+	public void approve(Tribe tribe)
 	{
-		tribe.getNews().forEach(news->{
+		repository.save(tribe);
+
+		newsRepository.findAllByTribe(tribe.getId()).forEach(news->{
+			news.setApproved(true);
 			newsRepository.save(news);
 		});
-		
-		tribe.getEvents().forEach(event->{
-			eventRepository.save(event);
-		});
-		
+	}
+
+	public void edit(Tribe tribe)
+	{
 		repository.save(tribe);
 	}
 
-	public void delete(@PathVariable String id)
+	public void delete(String id)
 	{
-		Tribe tribe = repository.findOne(id);
-		if(tribe != null)
-		{
-			tribe.getNews().forEach(news->{
-				newsRepository.delete(news);
-			});
-			
-			tribe.getEvents().forEach(event->{
-				eventRepository.delete(event);
-			});
-			
-			repository.delete(tribe);
-		}
+		repository.delete(id);
+
+		newsRepository.findAllByTribe(id).forEach(news->{
+			newsRepository.delete(news);
+		});
+		
+		eventRepository.findAllByTribe(id).forEach(event->{
+			eventRepository.delete(event);
+		});
 	}
 
 	public void delete(Collection<Tribe> tribes)

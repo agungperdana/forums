@@ -48,11 +48,11 @@ public class TribeDisplay extends Panel
 		picture.setBinary(tribe.getLogo());
 		
 		title.setContentMode(ContentMode.HTML);
-		title.setValue("<span style='color:blue;font-size:11px;font-weight:bold;width:100%;border-bottom:solid black 1px'>"+tribe.getTitle()+"</span>");
+		title.setValue("<span style='color:blue;font-size:11px;font-weight:bold;width:100%;border-bottom:solid black 1px'>"+tribe.getName()+"</span>");
 		title.setWidth("100%");
 		
 		note.setContentMode(ContentMode.HTML);
-		note.setValue("<span style='width:100%;font-size:10px'>"+tribe.getNote()+"</span>");
+		note.setValue("<span style='width:100%;font-size:10px'>"+tribe.getDescription()+"</span>");
 		
 		member.setContentMode(ContentMode.HTML);
 		member.setValue("<span style='color:red;font-size:9px;width:100%;font-weight:bold;'>Member ("+tribe.getFollowers()+")</span>");

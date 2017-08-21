@@ -17,7 +17,7 @@ import com.kratonsolution.products.forums.common.Springs;
 import com.kratonsolution.products.forums.dm.PersonalInfo;
 import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.dm.TribeNews;
-import com.kratonsolution.products.forums.svc.TribeService;
+import com.kratonsolution.products.forums.svc.TribeNewsService;
 import com.kratonsolution.products.forums.ui.Icons;
 import com.kratonsolution.products.forums.ui.TribeListener;
 import com.vaadin.data.Binder;
@@ -48,7 +48,7 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class TribeNewsForm extends Window
 {
-	private TribeService service = Springs.get(TribeService.class);
+	private TribeNewsService service = Springs.get(TribeNewsService.class);
 	
 	private HorizontalLayout layout = new HorizontalLayout();
 	
@@ -158,11 +158,9 @@ public class TribeNewsForm extends Window
 				
 				bind.getBean().setCreator(owner);
 				bind.getBean().setTimeCreated(DateUtil.toTimestamp(createdDate.getValue()));
-				bind.getBean().setTribe(tribe);
+				bind.getBean().setTribe(tribe.getId());
 				
-				tribe.getNews().add(bind.getBean());
-				
-				service.edit(tribe);
+				service.add(bind.getBean());
 				
 				Notification.show("Tribe News creation success.");
 				

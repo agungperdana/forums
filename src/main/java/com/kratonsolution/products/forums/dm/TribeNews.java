@@ -5,13 +5,11 @@ package com.kratonsolution.products.forums.dm;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
+import java.util.Vector;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
@@ -37,6 +35,9 @@ public class TribeNews implements Serializable
 	
 	private Timestamp timeCreated;
 	
+	private boolean approved = false;
+	
+	@Indexed
 	private PersonalInfo creator;
 
 	@Indexed
@@ -46,12 +47,13 @@ public class TribeNews implements Serializable
 	
 	private byte[] picture;
 	
-	private int views;
+	private int likes;
 
-	@DBRef
-	private Tribe tribe;
+	private String tribe;
 	
-	private List<Comment> comments = new ArrayList<Comment>();
+	private Vector<PersonalInfo> subscribers = new Vector<>();
+	
+	private Vector<Comment> comments = new Vector<>();
 	
 	public TribeNews(){}
 }

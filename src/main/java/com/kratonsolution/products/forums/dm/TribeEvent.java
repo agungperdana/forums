@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
@@ -30,8 +29,7 @@ public class TribeEvent implements Serializable
 	
 	private PersonalInfo creator;
 	
-	@DBRef
-	private Tribe tribe;
+	private String tribe;
 	
 	public TribeEvent(){}
 }

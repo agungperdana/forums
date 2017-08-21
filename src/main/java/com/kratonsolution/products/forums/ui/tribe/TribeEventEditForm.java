@@ -7,11 +7,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Vector;
 
-import com.kratonsolution.products.forums.common.DateUtil;
 import com.kratonsolution.products.forums.common.Security;
 import com.kratonsolution.products.forums.common.Springs;
-import com.kratonsolution.products.forums.dm.PersonalInfo;
-import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.dm.TribeEvent;
 import com.kratonsolution.products.forums.svc.TribeEventService;
 import com.kratonsolution.products.forums.ui.Icons;
@@ -32,7 +29,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Agung Dodi Perdana
  * @email agung.dodi.perdana@gmail.com 
  */
-public class TribeEventForm extends Window
+public class TribeEventEditForm extends Window
 {
 	private TribeEventService service = Springs.get(TribeEventService.class);
 	
@@ -40,11 +37,11 @@ public class TribeEventForm extends Window
 	
 	private Vector<TribeListener> listeners = new Vector<>();
 	
-	public TribeEventForm(Tribe tribe)
+	public TribeEventEditForm(TribeEvent event)
 	{
 		setWidth("70%");
 		setHeight("65%");
-		setCaption("Create New Event");
+		setCaption("Edit Event ["+event.getDescription()+"]");
 		setIcon(Icons.TRIBE_TOP);
 		setModal(true);
 		setResizable(false);
@@ -58,10 +55,10 @@ public class TribeEventForm extends Window
 		
 		setContent(root);
 		
-		buildInfo(tribe);
+		buildInfo(event);
 	}
 	
-	private void buildInfo(Tribe tribe)
+	private void buildInfo(TribeEvent tev)
 	{
 
 		DateTimeField createdDate = new DateTimeField("Event Date");
@@ -76,33 +73,25 @@ public class TribeEventForm extends Window
 		
 		Binder<TribeEvent> bind = new Binder<>();
 		bind.forField(description).withValidator(new StringLengthValidator("Description cannot be empty", 1, 500)).bind(TribeEvent::getDescription,TribeEvent::setDescription);
-		bind.setBean(new TribeEvent());
+		bind.setBean(tev);
 		
-		Button button = new Button("SUBMIT THIS EVENT");
+		Button button = new Button("UPDATE EVENT");
 		button.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		button.addClickListener(event->{
 			if(bind.validate().isOk())
 			{
 				button.setEnabled(false);
 				
-				PersonalInfo owner = new PersonalInfo();
-				owner.setEmail(Security.getUserEmail());
-				owner.setName(Security.getUserName());
+				service.edit(bind.getBean());
 				
-				bind.getBean().setCreator(owner);
-				bind.getBean().setCreated(DateUtil.toTimestamp(createdDate.getValue()));
-				bind.getBean().setTribe(tribe.getId());
-				
-				service.add(bind.getBean());
-				
-				Notification.show("Tribe Event creation success.");
+				Notification.show("Tribe Event update success.");
 				
 				listeners.forEach(listener->{listener.refresh(null);});
 				
-				UI.getCurrent().removeWindow(TribeEventForm.this);
+				UI.getCurrent().removeWindow(TribeEventEditForm.this);
 			}
 			else
-				Notification.show("Tribe Event creation failed.");
+				Notification.show("Tribe Event update failed.");
 		});
 		
 		root.addComponent(createdDate);

@@ -42,8 +42,8 @@ public class TribeTable extends Table<Tribe>
 		grid.setHeight("100%");
 		grid.setSelectionMode(SelectionMode.MULTI);
 		grid.addColumn(Tribe::getLastStatus,new TextRenderer()).setCaption("Status").setExpandRatio(2);
-		grid.addColumn(Tribe::getTitle,new TextRenderer()).setCaption("Name").setExpandRatio(15);
-		grid.addColumn(Tribe::getNote,new HtmlRenderer()).setCaption("Description").setExpandRatio(15);
+		grid.addColumn(Tribe::getName,new TextRenderer()).setCaption("Name").setExpandRatio(15);
+		grid.addColumn(Tribe::getDescription,new HtmlRenderer()).setCaption("Description").setExpandRatio(15);
 		grid.addColumn(Tribe::getGoal,new HtmlRenderer()).setCaption("Description").setExpandRatio(15);
 		grid.addColumn(Tribe::getCreator,new TextRenderer()).setCaption("Creator").setExpandRatio(1);
 		grid.setDataProvider(new TribeProvider());
@@ -73,7 +73,7 @@ public class TribeTable extends Table<Tribe>
 	{
 		public Show(Tribe tribe)
 		{
-			setCaption(tribe.getTitle().toUpperCase());
+			setCaption(tribe.getName().toUpperCase());
 			setIcon(VaadinIcons.BOOK);
 			setWidth("55%");
 			setHeight("80%");
@@ -91,12 +91,12 @@ public class TribeTable extends Table<Tribe>
 			TextField title = new TextField("Name");
 			title.setWidth("100%");
 			title.setEnabled(false);
-			title.setValue(tribe.getTitle());
+			title.setValue(tribe.getName());
 			
 			RichTextArea description = new RichTextArea("Description");
 			description.setWidth("100%");
 			description.setEnabled(false);
-			description.setValue(tribe.getNote());
+			description.setValue(tribe.getDescription());
 			
 			RichTextArea goal = new RichTextArea("Goal");
 			goal.setWidth("100%");
@@ -114,7 +114,7 @@ public class TribeTable extends Table<Tribe>
 				tribe.setLastStatus(status);
 				tribe.getStatuses().add(status);
 				
-				service.edit(tribe);
+				service.approve(tribe);
 			
 				UI.getCurrent().removeWindow(Show.this);
 

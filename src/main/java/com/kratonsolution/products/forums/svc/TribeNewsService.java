@@ -13,10 +13,13 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
+import com.kratonsolution.products.forums.common.Security;
+import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.dm.TribeNews;
 import com.kratonsolution.products.forums.dm.TribeNewsRepository;
+import com.kratonsolution.products.forums.dm.TribeRepository;
+import com.kratonsolution.products.forums.dm.TribeStatusType;
 
 /**
  * 
@@ -30,6 +33,9 @@ public class TribeNewsService
 	@Autowired
 	private TribeNewsRepository repository;
 
+	@Autowired
+	private TribeRepository tribeRepository;
+	
 	public TribeNews findOne(String id)
 	{
 		return repository.findOne(id);
@@ -38,6 +44,21 @@ public class TribeNewsService
 	public List<TribeNews> findAll()
 	{
 		return repository.findAll(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"timeCreated")))).getContent();
+	}
+	
+	public List<TribeNews> findAllApproved()
+	{
+		return repository.findAllApproved(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"timeCreated"))));
+	}
+	
+	public List<TribeNews> findAllMyNews()
+	{
+		return repository.findAllMyNews(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"timeCreated"))),Security.getUserEmail());
+	}
+	
+	public List<TribeNews> findAllByTribe(String tribeId)
+	{
+		return repository.findAllByTribe(new PageRequest(0, 50,new Sort(new Order(Direction.DESC,"timeCreated"))),tribeId);
 	}
 
 	public int size()
@@ -50,22 +71,38 @@ public class TribeNewsService
 		return repository.findAll(new PageRequest(pageIndex,pageSize)).getContent();
 	}
 
-	public void add(TribeNews tribe)
+	public void add(TribeNews news)
 	{
-		repository.save(tribe);
-	}
-
-	public void edit(TribeNews tribe)
-	{
-		repository.save(tribe);
-	}
-
-	public void delete(@PathVariable String id)
-	{
-		TribeNews tribe = repository.findOne(id);
+		Tribe tribe = tribeRepository.findOne(news.getTribe());
 		if(tribe != null)
 		{
-			repository.delete(tribe);
+			news.setApproved(tribe.getLastStatus().getType().equals(TribeStatusType.APPROVED));
+			news.getSubscribers().add(tribe.getCreator());
+			news.getSubscribers().add(tribe.getChieftain());
+			
+			tribe.getContributors().forEach(contrib->{
+				news.getSubscribers().add(contrib);
+			});
+			
+			tribe.getFollowers().forEach(follow->{
+				news.getSubscribers().add(follow);
+			});
+		}
+		
+		repository.save(news);
+	}
+
+	public void edit(TribeNews news)
+	{
+		repository.save(news);
+	}
+
+	public void delete(String id)
+	{
+		TribeNews news = repository.findOne(id);
+		if(news != null)
+		{
+			repository.delete(news);
 		}
 	}
 
@@ -73,8 +110,8 @@ public class TribeNewsService
 	{
 		if(tribes != null)
 		{
-			for(TribeNews tribe:tribes)
-				delete(tribe.getId());
+			for(TribeNews news:tribes)
+				delete(news.getId());
 		}
 	}
 }

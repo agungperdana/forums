@@ -9,6 +9,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 
 /**
  * @author Agung Dodi Perdana
@@ -45,5 +46,9 @@ public class EventDisplay extends Panel
 		}
 		
 		setContent(layout);
+	
+		addClickListener(click->{
+			UI.getCurrent().addWindow(new TribeEventEditForm(event));
+		});
 	}
 }

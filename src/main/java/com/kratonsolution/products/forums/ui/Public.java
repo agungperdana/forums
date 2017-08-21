@@ -1,7 +1,5 @@
 package com.kratonsolution.products.forums.ui;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Viewport;
@@ -17,14 +15,11 @@ import com.vaadin.ui.themes.ValoTheme;
 @Viewport("user-scalable=no,initial-scale=1.0")
 public class Public extends Page
 {	
-	@Autowired
-	private PublicTopTribeNews news;
+	private PublicTopTribeNews news = new PublicTopTribeNews();
 
-	@Autowired
-	private PublicTopTribe tribes;
+	private PublicTopTribe tribes = new PublicTopTribe();
 	
-	@Autowired
-	private PublicTribeEvent events;
+	private PublicTribeEvent events = new PublicTribeEvent();
 	
     @Override
     protected void init(VaadinRequest request) 

@@ -48,6 +48,16 @@ public class TribeEventService
 	{
 		return repository.findAll(new PageRequest(pageIndex,pageSize)).getContent();
 	}
+	
+	public List<TribeEvent> findAll(String tribe)
+	{
+		return repository.findAllByTribe(new PageRequest(0,50,new Sort(new Order(Direction.DESC,"created"))),tribe);
+	}
+	
+	public List<TribeEvent> findAllByTribe(String tribe)
+	{
+		return repository.findAllByTribe(tribe);
+	}
 
 	public void add(TribeEvent tribe)
 	{
@@ -61,11 +71,7 @@ public class TribeEventService
 
 	public void delete(String id)
 	{
-		TribeEvent tribe = repository.findOne(id);
-		if(tribe != null)
-		{
-			repository.delete(tribe);
-		}
+		repository.delete(id);
 	}
 
 	public void delete(Collection<TribeEvent> tribes)

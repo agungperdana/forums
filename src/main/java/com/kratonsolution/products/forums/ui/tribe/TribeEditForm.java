@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Vector;
 
 import com.kratonsolution.products.forums.common.DateUtil;
@@ -16,10 +17,13 @@ import com.kratonsolution.products.forums.common.Security;
 import com.kratonsolution.products.forums.common.Springs;
 import com.kratonsolution.products.forums.dm.PersonalInfo;
 import com.kratonsolution.products.forums.dm.Tribe;
+import com.kratonsolution.products.forums.dm.TribeNews;
 import com.kratonsolution.products.forums.dm.TribeStatus;
 import com.kratonsolution.products.forums.dm.TribeStatusType;
 import com.kratonsolution.products.forums.dm.User;
 import com.kratonsolution.products.forums.dm.UserRepository;
+import com.kratonsolution.products.forums.svc.TribeEventService;
+import com.kratonsolution.products.forums.svc.TribeNewsService;
 import com.kratonsolution.products.forums.svc.TribeService;
 import com.kratonsolution.products.forums.ui.Icons;
 import com.kratonsolution.products.forums.ui.MultiCombo;
@@ -28,12 +32,14 @@ import com.vaadin.data.Binder;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateTimeField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
@@ -65,6 +71,10 @@ public class TribeEditForm extends Window
 	private UserRepository repository = Springs.get(UserRepository.class);
 	
 	private TribeService service = Springs.get(TribeService.class);
+	
+	private TribeNewsService newsService = Springs.get(TribeNewsService.class);
+
+	private TribeEventService eventService = Springs.get(TribeEventService.class);
 	
 	private FormLayout left = new FormLayout();
 	
@@ -139,23 +149,25 @@ public class TribeEditForm extends Window
 		
 		setContent(sheet);
 		
-		buildInfo(tribe);
 		buildNews(tribe);
 		buildEvent(tribe);
+		buildInfo(tribe);
 	}
 	
 	private void buildInfo(Tribe tribe)
 	{
+		sheet.setSelectedTab(infoLayout);
+		
 		tribeLogo.setCaption(null);
 		tribeLogo.setIcon(new StreamResource(new IconStream(tribe.getLogo()),"nonane"));
 		
 		TextField name = new TextField("Tribe Name");
 		name.setWidth("100%");
-		name.setValue(tribe.getTitle());
+		name.setValue(tribe.getName());
 		
 		RichTextArea note = new RichTextArea("Short Description");
 		note.setWidth("100%");
-		note.setValue(tribe.getNote());
+		note.setValue(tribe.getDescription());
 		
 		RichTextArea goal = new RichTextArea("Tribe Goal");
 		goal.setWidth("100%");
@@ -202,8 +214,8 @@ public class TribeEditForm extends Window
 		chief.setSelectedItem(tribe.getChieftain());
 		
 		Binder<Tribe> bind = new Binder<>();
-		bind.forField(name).withValidator(new StringLengthValidator("Name cannot be empty", 1, 500)).bind(Tribe::getTitle,Tribe::setTitle);
-		bind.forField(note).withValidator(new StringLengthValidator("Description cannot be empty", 1, 500)).bind(Tribe::getNote,Tribe::setNote);
+		bind.forField(name).withValidator(new StringLengthValidator("Name cannot be empty", 1, 500)).bind(Tribe::getName,Tribe::setName);
+		bind.forField(note).withValidator(new StringLengthValidator("Description cannot be empty", 1, 500)).bind(Tribe::getDescription,Tribe::setDescription);
 		bind.forField(goal).withValidator(new StringLengthValidator("Goal cannot be empty", 1, 500)).bind(Tribe::getGoal,Tribe::setGoal);
 		bind.setBean(tribe);
 		
@@ -259,49 +271,70 @@ public class TribeEditForm extends Window
 	{
 		newsLayout.removeAllComponents();
 		
-		Button add = new Button("Create News");
-		add.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-		add.setWidth("250px");
-		add.setHeight("250px");
-		add.addClickListener(click->{
-			
-			TribeNewsForm form = new TribeNewsForm(tribe);
-			form.addTribeListener(listener->{
-				buildInfo(service.findOne(tribe.getId()));
-			});
+		if(tribe.getLastStatus().getType().equals(TribeStatusType.APPROVED))
+		{
+			Button add = new Button("Create News");
+			add.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+			add.setWidth("250px");
+			add.setHeight("250px");
+			add.addClickListener(click->{
+				
+				TribeNewsForm form = new TribeNewsForm(tribe);
+				form.addTribeListener(listener->{
+					buildNews(tribe);
+				});
 
-			UI.getCurrent().addWindow(form);
-		});
+				UI.getCurrent().addWindow(form);
+			});
+			
+			newsLayout.addComponent(add);
+		}
+		else
+		{
+			Label label = new Label("<font style='color:red;font-weight:bolder;'>Cannot create news, this tribe not yet approved by admin.</font>", ContentMode.HTML);
+			newsLayout.addComponent(label);
+		}
 		
-		newsLayout.addComponent(add);
-		
-		tribe.getNews().forEach(news->{
+		List<TribeNews> newses = newsService.findAllByTribe(tribe.getId());
+		newses.forEach(news->{
 			newsLayout.addComponent(new NewsDisplay(news));
 		});
+		
+		sheet.setSelectedTab(newsLayout);
 	}
 	
 	private void buildEvent(Tribe tribe)
 	{
 		eventLayout.removeAllComponents();
 		
-		Button add = new Button("Create Event");
-		add.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-		add.setHeight("100px");
-		add.addClickListener(click->{
-			
-			TribeEventForm form = new TribeEventForm(tribe);
-			form.addTribeListener(listener->{
-				buildInfo(service.findOne(tribe.getId()));
-			});
+		if(tribe.getLastStatus().getType().equals(TribeStatusType.APPROVED))
+		{
+			Button add = new Button("Create Event");
+			add.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+			add.setHeight("100px");
+			add.addClickListener(click->{
+				
+				TribeEventForm form = new TribeEventForm(tribe);
+				form.addTribeListener(listener->{
+					buildEvent(service.findOne(tribe.getId()));
+				});
 
-			UI.getCurrent().addWindow(form);
-		});
+				UI.getCurrent().addWindow(form);
+			});
+			
+			eventLayout.addComponent(add);
+		}
+		else
+		{
+			Label label = new Label("<font style='color:red;font-weight:bolder;'>Cannot create event, this tribe not yet approved by admin.</font>", ContentMode.HTML);
+			eventLayout.addComponent(label);
+		}
 		
-		eventLayout.addComponent(add);
-		
-		tribe.getEvents().forEach(event->{
+		eventService.findAllByTribe(tribe.getId()).forEach(event->{
 			eventLayout.addComponent(new EventDisplay(event));
 		});
+		
+		sheet.setSelectedTab(eventLayout);
 	}
 	
 	private class UploadHandler implements Receiver,SucceededListener,StreamSource

@@ -8,15 +8,11 @@ import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.svc.TribeService;
 import com.kratonsolution.products.forums.ui.tribe.TribeDisplay;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
 
 /**
  * @author Agung Dodi Perdana
  * @email agung.dodi.perdana@gmail.com 
  */
-@SpringComponent
-@UIScope
 public class PublicTopTribe extends TopTribe
 {
 	private TribeService service = Springs.get(TribeService.class);

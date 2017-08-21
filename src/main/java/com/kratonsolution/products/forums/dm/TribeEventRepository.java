@@ -3,6 +3,9 @@
  */
 package com.kratonsolution.products.forums.dm;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
@@ -11,5 +14,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface TribeEventRepository extends MongoRepository<TribeEvent, String>
 {
-
+	public List<TribeEvent> findAllByTribe(Pageable pageable,String tribe);
+	
+	public List<TribeEvent> findAllByTribe(String tribe);
 }

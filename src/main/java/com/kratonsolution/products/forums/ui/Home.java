@@ -31,9 +31,9 @@ public class Home extends Page
     public void initContent()
     {
     	header.getNavigation().removeAllComponents();
+    	header.setComponentAlignment(header.getNavigation(), Alignment.MIDDLE_RIGHT);
     	
     	MenuBar bar = new MenuBar();
-    	bar.setSizeUndefined();
     	bar.setStyleName(ValoTheme.MENUBAR_BORDERLESS);
     	bar.addItem("Helo "+Security.getUserName(), Icons.SIGN_IN,event->{});
     	
@@ -51,11 +51,11 @@ public class Home extends Page
     	content.setExpandRatio(display, 4.3f);
     	
     	display.setContent(new WhatsNew());
-    	side.setSelected(side.getNews());
+    	side.setSelected(side.getWhatNew());
     	
-    	side.getNews().setCommand(event->{
+    	side.getWhatNew().setCommand(event->{
         	display.setContent(new WhatsNew());
-        	side.setSelected(side.getNews());
+        	side.setSelected(side.getWhatNew());
     	});
     	
     	side.getManage().setCommand(event->{

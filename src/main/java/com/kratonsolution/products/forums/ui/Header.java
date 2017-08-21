@@ -3,15 +3,13 @@
  */
 package com.kratonsolution.products.forums.ui;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.kratonsolution.products.forums.common.Springs;
 import com.kratonsolution.products.forums.dm.FindType;
 import com.kratonsolution.products.forums.svc.UserService;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
@@ -27,8 +25,6 @@ import lombok.Getter;
  * @author Agung Dodi Perdana
  * @email agung.dodi.perdana@gmail.com 
  */
-@SpringComponent
-@UIScope
 @Getter
 public class Header extends HorizontalLayout
 {
@@ -36,14 +32,11 @@ public class Header extends HorizontalLayout
 	
 	private HorizontalLayout navigation = new HorizontalLayout();
 	
-	@Autowired
-	private UserDetailsService authService;
+	private UserDetailsService authService = Springs.get(UserDetailsService.class);
 	
-	@Autowired
-	private AuthenticationManager manager;
+	private AuthenticationManager manager = Springs.get(AuthenticationManager.class);
 	
-	@Autowired
-	private UserService service;
+	private UserService service = Springs.get(UserService.class);
 	
 	public Header()
 	{
@@ -52,8 +45,8 @@ public class Header extends HorizontalLayout
 		
 		addComponent(logo);
 		addComponent(navigation);
-		setExpandRatio(logo, 1.1f);
-		setExpandRatio(navigation, 1f);
+		setExpandRatio(logo, 2.5f);
+		setExpandRatio(navigation, 2.5f);
 
 		initLogo();
 		initNavogation();
@@ -74,15 +67,14 @@ public class Header extends HorizontalLayout
 	
 	private void initNavogation()
 	{
-		navigation.setWidth("100%");
+		navigation.setSpacing(true);
 		
 		Label lfind = new Label("Find: ");
 		
 		ComboBox<FindType> finds = new ComboBox<>();
 		finds.setItems(FindType.values());
-		finds.setWidth("100px");
-		finds.setEnabled(true);
 		finds.setSelectedItem(FindType.TRIBE);
+		finds.setWidth("115px");
 		
 		TextField search = new TextField();
 		search.setPlaceholder("Search...");

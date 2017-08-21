@@ -3,8 +3,6 @@
  */
 package com.kratonsolution.products.forums.ui;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -22,7 +20,6 @@ public abstract class Page extends UI
 	
 	protected HorizontalLayout content = new HorizontalLayout();
 	
-	@Autowired
 	protected Header header = new Header();
 	
 	protected void display()

@@ -5,15 +5,11 @@ package com.kratonsolution.products.forums.dm;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
+import java.util.Vector;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
@@ -32,10 +28,12 @@ public class Tribe implements Serializable
 	private String id = UUID.randomUUID().toString();
 	
 	@Indexed
-	private String title;
+	private String name;
 	
-	private String note;
+	@Indexed
+	private String description;
 
+	@Indexed
 	private String goal;
 	
 	private Timestamp created;
@@ -46,20 +44,13 @@ public class Tribe implements Serializable
 	
 	private PersonalInfo chieftain;
 	
-	@Indexed
 	private PersonalInfo creator;
 	
-	private List<PersonalInfo> contributors = new ArrayList<>();
+	private Vector<PersonalInfo> contributors = new Vector<>();
 	
-	private Set<TribeStatus> statuses = new HashSet<>();
+	private Vector<TribeStatus> statuses = new Vector<>();
 	
-	@DBRef
-	private Set<TribeNews> news = new HashSet<>();
-	
-	@DBRef
-	private Set<TribeEvent> events = new HashSet<>();
-	
-	private Set<TribeFollower> followers = new HashSet<>();
+	private Vector<PersonalInfo> followers = new Vector<>();
 	
 	public Tribe(){}
 }
