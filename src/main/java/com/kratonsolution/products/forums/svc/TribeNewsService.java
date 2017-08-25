@@ -68,7 +68,7 @@ public class TribeNewsService
 
 	public List<TribeNews> findAll(int pageIndex,int pageSize)
 	{
-		return repository.findAll(new PageRequest(pageIndex,pageSize)).getContent();
+		return repository.findAll(new PageRequest(pageIndex,pageSize,new Sort(new Order(Direction.DESC,"timeCreated")))).getContent();
 	}
 
 	public void add(TribeNews news)

@@ -18,7 +18,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class TribeDisplay extends Panel
 {
-	private HorizontalLayout layout = new HorizontalLayout();
+	private HorizontalLayout root = new HorizontalLayout();
 	
 	private SmallPicture picture = new SmallPicture();
 	
@@ -33,17 +33,17 @@ public class TribeDisplay extends Panel
 	public TribeDisplay(Tribe tribe)
 	{
 		setHeight("100px");
-		setWidth("275px");
+		setWidth("99%");
 
-		layout.setMargin(false);
-		layout.setHeight("100%");
-		layout.setWidth("100%");
-		layout.addComponent(picture);
-		layout.addComponent(contents);
-		layout.setExpandRatio(picture, 1.5f);
-		layout.setExpandRatio(contents, 2.5f);
-		layout.setComponentAlignment(picture, Alignment.MIDDLE_CENTER);
-		layout.setComponentAlignment(contents, Alignment.MIDDLE_CENTER);
+		root.setMargin(false);
+		root.setHeight("100%");
+		root.setWidth("100%");
+		root.addComponent(picture);
+		root.addComponent(contents);
+		root.setExpandRatio(picture, 1.5f);
+		root.setExpandRatio(contents, 2.5f);
+		root.setComponentAlignment(picture, Alignment.MIDDLE_CENTER);
+		root.setComponentAlignment(contents, Alignment.MIDDLE_CENTER);
 		
 		picture.setBinary(tribe.getLogo());
 		
@@ -72,6 +72,6 @@ public class TribeDisplay extends Panel
 		contents.setComponentAlignment(note, Alignment.MIDDLE_LEFT);
 		contents.setComponentAlignment(member, Alignment.BOTTOM_LEFT);
 		
-		setContent(layout);
+		setContent(root);
 	}
 }

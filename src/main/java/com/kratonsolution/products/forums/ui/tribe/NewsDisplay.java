@@ -26,8 +26,8 @@ public class NewsDisplay extends Panel
 	
 	public NewsDisplay(TribeNews news)
 	{
-		setWidth("225px");
-		setHeight("265px");
+		setWidth("100%");
+//		setHeight("265px");
 		
 		description.setWidth("100%");
 		description.setHeight("100%");
