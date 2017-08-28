@@ -82,7 +82,7 @@ public class ManageTribe extends VerticalLayout implements HomeContent, TribeLis
 
 		for(Tribe tribe:service.findAllInvolved())
 		{
-			TribeDisplay display = new TribeDisplay(tribe);
+			TribeDisplay display = new TribeDisplay(tribe,"250px");
 			display.addClickListener(click->{
 				UI.getCurrent().addWindow(new TribeEditForm(tribe));
 			});
@@ -95,7 +95,7 @@ public class ManageTribe extends VerticalLayout implements HomeContent, TribeLis
 	{
 		for(Tribe tribe:service.findAllApproved())
 		{
-			TribeDisplay display = new TribeDisplay(tribe);
+			TribeDisplay display = new TribeDisplay(tribe,"250px");
 			display.addClickListener(click->{
 
 			});

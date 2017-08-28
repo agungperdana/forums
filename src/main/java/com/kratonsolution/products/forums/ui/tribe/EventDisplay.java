@@ -21,7 +21,12 @@ public class EventDisplay extends Panel
 	
 	public EventDisplay(TribeEvent event)
 	{
-		setWidth("99%");
+		this(event,"99%");
+	}
+	
+	public EventDisplay(TribeEvent event,String width)
+	{
+		setWidth(width);
 		setHeight("100px");
 		
 		GridLayout layout = new GridLayout(1, 1);

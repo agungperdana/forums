@@ -32,8 +32,13 @@ public class TribeDisplay extends Panel
 	
 	public TribeDisplay(Tribe tribe)
 	{
+		this(tribe,"99%");
+	}
+	
+	public TribeDisplay(Tribe tribe,String width)
+	{
 		setHeight("100px");
-		setWidth("99%");
+		setWidth(width);
 
 		root.setMargin(false);
 		root.setHeight("100%");

@@ -4,9 +4,9 @@
 package com.kratonsolution.products.forums.dm;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
@@ -40,8 +40,10 @@ public class User implements Serializable
 	private boolean activated = false;
 	
 	private Language languange = Language.EN_US;
+
+	private List<Message> inbox = new ArrayList<>();
 	
-	private Set<JoinedTribe> tribes = new HashSet<>();
+	private List<Message> outbox = new ArrayList<>();
 	
 	public User(){}
 	

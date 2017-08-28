@@ -37,8 +37,7 @@ public class Public extends Page
 	public void initContent()
 	{
 		GridLayout right = new GridLayout(1,2);
-    	right.setWidth("100%");
-    	right.setHeight("100%");
+		right.setSizeFull();
     	right.addComponent(tribes);
     	right.addComponent(events);
     	right.setComponentAlignment(tribes, Alignment.TOP_CENTER);
@@ -46,7 +45,7 @@ public class Public extends Page
     	
     	content.addComponent(news);
     	content.addComponent(right);
-    	content.setExpandRatio(news, 5);
+    	content.setExpandRatio(news, 4);
     	content.setExpandRatio(right, 1f);
 	}
 }

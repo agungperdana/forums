@@ -8,6 +8,7 @@ import com.kratonsolution.products.forums.svc.TribeEventService;
 import com.kratonsolution.products.forums.ui.tribe.EventDisplay;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
@@ -37,7 +38,7 @@ public class PublicTribeEvent extends Panel
 		setSizeFull();
 		addStyleName(ValoTheme.PANEL_BORDERLESS);
 
-		root.setMargin(true);
+		root.setMargin(new MarginInfo(true,false,true,false));
 		root.setSpacing(false);
 		root.addComponent(title);
 		root.addComponent(contents);

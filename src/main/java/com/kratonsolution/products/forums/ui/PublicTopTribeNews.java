@@ -8,6 +8,7 @@ import com.kratonsolution.products.forums.svc.TribeNewsService;
 import com.kratonsolution.products.forums.ui.tribe.NewsDisplay;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
@@ -64,7 +65,7 @@ public class PublicTopTribeNews extends Panel
 		});
 		
 		root.setSpacing(false);
-		root.setMargin(true);
+		root.setMargin(new MarginInfo(true,false,true,true));
 		root.addComponent(title);
 		root.addComponent(contents);
 		root.addComponent(more);
