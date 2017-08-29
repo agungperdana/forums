@@ -69,7 +69,7 @@ public class ManageTribe extends GridLayout implements HomeContent, TribeListene
 		browseTribe.setWidth("100%");
 		browseTribe.addTab(alltribeLayout,"Browse Tribe",Icons.TRIBE_EVENT);
 		
-		addComponent(myTribe);
+		addComponent(new MyTribe());
 		addComponent(new BrowseTribe());
 
 		populateMyTribeContent();
