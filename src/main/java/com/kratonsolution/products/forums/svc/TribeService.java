@@ -68,6 +68,11 @@ public class TribeService
 	{
 		return repository.findAllByLastStatusType(new PageRequest(0, 20,new Sort(new Order(Direction.DESC,"created"))),TribeStatusType.APPROVED);
 	}
+	
+	public List<Tribe> findAllApproved(int page,int howmany)
+	{
+		return repository.findAllByLastStatusType(new PageRequest(page, howmany,new Sort(new Order(Direction.DESC,"created"))),TribeStatusType.APPROVED);
+	}
 
 	public int size()
 	{

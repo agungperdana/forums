@@ -11,6 +11,7 @@ import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * @author Agung Dodi Perdana
@@ -29,16 +30,14 @@ public class SmallPicture extends Panel
 	
 	public SmallPicture(byte[] binary)
 	{
+		addStyleName(ValoTheme.PANEL_BORDERLESS);
 		setWidth("100%");
 		setHeight("100%");
 
 		image.setSizeFull();
 		
-		layout.setWidth("100%");
-		layout.setHeight("100%");
-		layout.setMargin(false);
-		layout.setSpacing(false);
-		layout.addComponent(image);
+		layout.setSizeFull();
+		layout.addComponentsAndExpand(image);
 		
 		setContent(layout);
 	}

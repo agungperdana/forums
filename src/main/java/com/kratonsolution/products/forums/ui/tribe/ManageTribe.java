@@ -12,16 +12,16 @@ import com.kratonsolution.products.forums.ui.TribeEvent;
 import com.kratonsolution.products.forums.ui.TribeListener;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * @author Agung Dodi Perdana
  * @email agung.dodi.perdana@gmail.com 
  */
-public class ManageTribe extends VerticalLayout implements HomeContent, TribeListener
+public class ManageTribe extends GridLayout implements HomeContent, TribeListener
 {
 	private TribeService service = Springs.get(TribeService.class);
 
@@ -33,6 +33,8 @@ public class ManageTribe extends VerticalLayout implements HomeContent, TribeLis
 	
 	public ManageTribe()
 	{
+		setColumns(1);
+		setRows(2);
 		setWidth("100%");
 		setHeight("100%");
 		setSpacing(true);
@@ -68,7 +70,7 @@ public class ManageTribe extends VerticalLayout implements HomeContent, TribeLis
 		browseTribe.addTab(alltribeLayout,"Browse Tribe",Icons.TRIBE_EVENT);
 		
 		addComponent(myTribe);
-		addComponent(browseTribe);
+		addComponent(new BrowseTribe());
 
 		populateMyTribeContent();
 		populateBrowseTribe();
