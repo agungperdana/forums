@@ -73,6 +73,14 @@ public class TribeService
 	{
 		return repository.findAllByLastStatusType(new PageRequest(page, howmany,new Sort(new Order(Direction.DESC,"created"))),TribeStatusType.APPROVED);
 	}
+	
+	public List<Tribe> findAllApproved(int page,int howmany,String key)
+	{
+		if(key == null || key.equals(""))
+			return findAllApproved(page, howmany);
+		
+		return repository.findAllByLastStatusTypeAndNameOrDescriptionLike(new PageRequest(page, howmany,new Sort(new Order(Direction.DESC,"created"))),TribeStatusType.APPROVED,key,key);
+	}
 
 	public int size()
 	{

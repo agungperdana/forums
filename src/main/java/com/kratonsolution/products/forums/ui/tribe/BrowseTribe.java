@@ -42,6 +42,12 @@ public class BrowseTribe extends VerticalLayout
 
 		TextField search = new TextField("Find");
 		search.setWidth("250px");
+		search.addValueChangeListener(event->{
+			start = 0;
+			
+			contents.removeAllComponents();
+			contents.addComponent(new Tribe(start, event.getValue()));
+		});
 
 		FormLayout layout = new FormLayout();
 		layout.addComponent(search);
@@ -63,7 +69,7 @@ public class BrowseTribe extends VerticalLayout
 		more.addClickListener(click->{
 			start++;
 
-			Tribe display = new Tribe(start); 
+			Tribe display = new Tribe(start,search.getValue()); 
 			if(display.getComponentCount() < 9)
 				more.setEnabled(false);
 
@@ -73,23 +79,28 @@ public class BrowseTribe extends VerticalLayout
 		addComponent(north);
 		addComponentsAndExpand(panel);
 		
-		contents.addComponent(new Tribe(start));
+		contents.addComponent(new Tribe(start,search.getValue()));
 	}
 	
 	private class Tribe extends GridLayout
 	{
 		private TribeService service = Springs.get(TribeService.class);
 
-		public Tribe(int start)
+		public Tribe(int start,String key)
 		{
 			setRows(2);
 			setColumns(4);
 			setSpacing(true);
 			setWidth("99%");
 			
-			service.findAllApproved(start, 8).forEach(tribe->{
+			service.findAllApproved(start, 8,key).forEach(tribe->{
 				addComponent(new TribeDisplay(tribe));
 			});
+		}
+		
+		public Tribe(int start)
+		{
+			this(start,null);
 		}
 	}
 }
