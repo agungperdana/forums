@@ -53,4 +53,18 @@ public class Tribe implements Serializable
 	private Vector<PersonalInfo> followers = new Vector<>();
 	
 	public Tribe(){}
+	
+	public boolean isJoined(String email)
+	{
+		if(email != null && !email.equals(""))
+		{
+			for(PersonalInfo info:followers)
+			{
+				if(info.getEmail().equals(email))
+					return true;
+			}
+		}
+		
+		return false;
+	}
 }

@@ -15,6 +15,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -94,7 +95,11 @@ public class BrowseTribe extends VerticalLayout
 			setWidth("99%");
 			
 			service.findAllApproved(start, 8,key).forEach(tribe->{
-				addComponent(new TribeDisplay(tribe));
+				TribeDisplay display = new TribeDisplay(tribe);
+				display.addClickListener(click->{
+					UI.getCurrent().addWindow(new TribeInfo(tribe));
+				});
+				addComponent(display);
 			});
 		}
 		

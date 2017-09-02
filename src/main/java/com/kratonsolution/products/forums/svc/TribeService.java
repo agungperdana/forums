@@ -4,6 +4,7 @@
 package com.kratonsolution.products.forums.svc;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kratonsolution.products.forums.common.Security;
+import com.kratonsolution.products.forums.dm.PersonalInfo;
 import com.kratonsolution.products.forums.dm.Tribe;
 import com.kratonsolution.products.forums.dm.TribeEventRepository;
 import com.kratonsolution.products.forums.dm.TribeNewsRepository;
@@ -131,6 +133,41 @@ public class TribeService
 		{
 			for(Tribe tribe:tribes)
 				delete(tribe.getId());
+		}
+	}
+	
+	public void join(String tribe)
+	{
+		Tribe out = repository.findOne(tribe);
+		if(out != null)
+		{
+			PersonalInfo info = new PersonalInfo();
+			info.setName(Security.getUserName());
+			info.setEmail(Security.getUserEmail());
+			
+			out.getFollowers().add(info);
+		
+			repository.save(out);
+		}
+	}
+	
+	public void leave(String tribe)
+	{
+		Tribe out = repository.findOne(tribe);
+		if(out != null)
+		{
+			Iterator<PersonalInfo> iterator = out.getFollowers().iterator();
+			while (iterator.hasNext())
+			{
+				PersonalInfo info = (PersonalInfo) iterator.next();
+				if(info.getEmail().equals(Security.getUserEmail()))
+				{
+					iterator.remove();
+					break;
+				}
+			}
+			
+			repository.save(out);
 		}
 	}
 }
