@@ -1,0 +1,12 @@
+apply plugin: "com.devsoap.plugin.vaadin"
+
+dependencies {
+    
+    compile project(':common')
+    compile project(':user-api')
+    compile project(':user-impl')
+    compile project(':tribe-api')
+    compile project(':tribe-impl')
+    
+    compile 'org.springframework.boot:spring-boot-starter-web'
+}

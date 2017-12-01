@@ -1,0 +1,74 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.8.RELEASE'
+        generatedMapperSourcesDir = '$buildDir/classes/main/'
+        lombokVersion = '1.16.18'
+        mapstructVersion = '1.2.0.Final'
+    }
+    
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE")
+        classpath("net.ltgt.gradle:gradle-apt-plugin:0.13")
+        classpath("com.devsoap.plugin:gradle-vaadin-plugin:1.2.6")
+    }
+}
+
+subprojects {
+    
+    apply plugin: 'java'
+    apply plugin: 'base'
+    apply plugin: 'groovy'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'net.ltgt.apt'
+    
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        }
+    }
+    
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "http://maven.vaadin.com/vaadin-addons" }
+    }
+    
+    dependencies {
+        
+        // common compile dependencies
+        compile 'org.codehaus.groovy:groovy-all'
+        compile 'org.slf4j:slf4j-api'
+        compile 'org.slf4j:jcl-over-slf4j'
+        compile 'com.google.guava:guava:21.0'
+        compile 'org.apache.commons:commons-lang3:3.4'
+        compile 'javax.validation:validation-api:2.0.0.Final'
+                
+        compile "org.mapstruct:mapstruct-jdk8:${mapstructVersion}"
+        apt "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+        
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        apt "org.projectlombok:lombok:${lombokVersion}"
+        
+        // common test dependencies
+        testCompile 'junit:junit:4.12'
+        testCompile 'org.springframework.boot:spring-boot-starter-test'
+        testCompile 'org.spockframework:spock-spring:1.0-groovy-2.4'
+        testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+        testCompile 'org.mockito:mockito-core'
+    }
+    
+    springBoot {
+        mainClass = "com.kratonsolution.products.forums.Forums"
+    }
+}

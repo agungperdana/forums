@@ -1,0 +1,9 @@
+rootProject.name = 'forums'
+
+include 'common'
+include 'user-api'
+include 'user-impl'
+include 'tribe-api'
+include 'tribe-impl'
+include 'security'
+include 'web'
